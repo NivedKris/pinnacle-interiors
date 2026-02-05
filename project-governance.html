@@ -291,6 +291,33 @@
             border: 1px solid #ef4444;
         }
         
+        /* Card-level status thermometer bar */
+        .card-status-bar {
+            height: 8px;
+            background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+        }
+        .card-status-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: all 0.5s ease;
+        }
+        .card-status-fill-green {
+            background: linear-gradient(135deg, #059669, #10b981);
+            box-shadow: 0 0 8px rgba(5, 150, 105, 0.3);
+        }
+        .card-status-fill-amber {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            box-shadow: 0 0 8px rgba(217, 119, 6, 0.3);
+        }
+        .card-status-fill-red {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 0 8px rgba(220, 38, 38, 0.3);
+        }
+        
         /* Subtle background texture */
         body::before {
             content: '';
@@ -368,23 +395,17 @@
                     <span class="material-symbols-outlined text-slate-600">shield</span>
                     EHS
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-amber" style="width: 88%;"></div>
+                </div>
                 <div class="space-y-3">
-                    <div class="flex items-center gap-3">
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
-                        </div>
+                    <div>
                         <input type="text" class="governance-input" placeholder="Safety status update..." value="All safety protocols active and compliant">
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 70%;"></div>
-                        </div>
+                    <div>
                         <input type="text" class="governance-input" placeholder="Safety status update..." value="PPE training scheduled for new crew">
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
-                        </div>
+                    <div>
                         <input type="text" class="governance-input" placeholder="Safety status update..." value="Weekly safety meeting completed">
                     </div>
                 </div>
@@ -396,20 +417,17 @@
                     <span class="material-symbols-outlined text-slate-600">engineering</span>
                     Project Management
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-red" style="width: 65%;"></div>
+                </div>
                 
                 <div class="mb-5">
                     <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-3 text-xs uppercase tracking-wide">Works This Week</h4>
                     <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="thermometer" style="width: 60px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 85%;"></div>
-                            </div>
+                        <div>
                             <input type="text" class="governance-input" placeholder="Work item..." value="Marble installation Level 42-44">
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="thermometer" style="width: 60px;">
-                                <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
-                            </div>
+                        <div>
                             <input type="text" class="governance-input" placeholder="Work item..." value="Electrical fit-out coordination">
                         </div>
                     </div>
@@ -418,16 +436,10 @@
                 <div class="mb-5">
                     <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-3 text-xs uppercase tracking-wide">Works Next Week</h4>
                     <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="thermometer" style="width: 60px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 75%;"></div>
-                            </div>
+                        <div>
                             <input type="text" class="governance-input" placeholder="Planned work..." value="Lighting installation and testing">
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="thermometer" style="width: 60px;">
-                                <div class="thermometer-fill thermometer-red" style="width: 35%;"></div>
-                            </div>
+                        <div>
                             <input type="text" class="governance-input" placeholder="Planned work..." value="Final inspection preparation">
                         </div>
                     </div>
@@ -435,35 +447,20 @@
 
                 <!-- Status Items -->
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between">
+                    <div>
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Shop Drawings Completion</span>
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 65%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between">
+                    <div>
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Local Authority Status</span>
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between">
+                    <div>
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Material Sample Boards Approval</span>
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between">
+                    <div>
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Material Submission Approval</span>
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-red" style="width: 40%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between">
+                    <div>
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-300">LPO Status</span>
-                        <div class="thermometer" style="width: 80px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 70%;"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -478,33 +475,21 @@
                     <span class="material-symbols-outlined text-red-600">schedule</span>
                     Critical Long Lead Items
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-red" style="width: 55%;"></div>
+                </div>
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">Italian Marble Slabs - Premium Grade</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 20 Feb 2026</div>
-                        </div>
-                        <div class="thermometer" style="width: 70px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 55%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">Italian Marble Slabs - Premium Grade</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 20 Feb 2026</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">Custom Light Fixtures - Main Lobby</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 15 Mar 2026</div>
-                        </div>
-                        <div class="thermometer" style="width: 70px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 80%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">Custom Light Fixtures - Main Lobby</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 15 Mar 2026</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">Elevator Control Systems</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 01 Apr 2026</div>
-                        </div>
-                        <div class="thermometer" style="width: 70px;">
-                            <div class="thermometer-fill thermometer-red" style="width: 30%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">Elevator Control Systems</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 01 Apr 2026</div>
                     </div>
                 </div>
             </div>
@@ -515,33 +500,21 @@
                     <span class="material-symbols-outlined text-amber-600">receipt</span>
                     Critical LPOs
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-amber" style="width: 87%;"></div>
+                </div>
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">LPO-2026-234</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 450,000 - Approved</div>
-                        </div>
-                        <div class="thermometer" style="width: 70px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">LPO-2026-234</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">AED 450,000 - Approved</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">LPO-2026-187</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 230,000 - Pending</div>
-                        </div>
-                        <div class="thermometer" style="width: 70px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">LPO-2026-187</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">AED 230,000 - Pending</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">LPO-2026-198</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 180,000 - Approved</div>
-                        </div>
-                        <div class="thermometer" style="width: 70px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">LPO-2026-198</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">AED 180,000 - Approved</div>
                     </div>
                 </div>
             </div>
@@ -552,26 +525,19 @@
                     <span class="material-symbols-outlined text-red-600">warning</span>
                     Risks / Mitigations
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-amber" style="width: 80%;"></div>
+                </div>
                 <div class="space-y-4">
                     <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Marble delivery delay risk</div>
-                            <div class="thermometer" style="width: 60px;">
-                                <div class="thermometer-fill thermometer-amber" style="width: 65%;"></div>
-                            </div>
-                        </div>
+                        <div class="font-medium text-sm text-slate-900 dark:text-slate-100 mb-2">Marble delivery delay risk</div>
                         <div class="text-sm text-slate-600 dark:text-slate-400 mb-2">Mitigation: Alternative supplier sourced</div>
                         <div class="text-sm">
                             <span class="governance-link">Status: Open</span>
                         </div>
                     </div>
                     <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Weather impact on schedule</div>
-                            <div class="thermometer" style="width: 60px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
-                            </div>
-                        </div>
+                        <div class="font-medium text-sm text-slate-900 dark:text-slate-100 mb-2">Weather impact on schedule</div>
                         <div class="text-sm text-slate-600 dark:text-slate-400 mb-2">Mitigation: Indoor work prioritized</div>
                         <div class="text-sm">
                             <span class="governance-link">Status: Closed</span>
@@ -586,10 +552,10 @@
                     <span class="material-symbols-outlined text-red-600">priority_high</span>
                     Escalation Items
                 </h3>
-                <div class="flex items-start gap-3 mb-3">
-                    <div class="thermometer" style="width: 60px; margin-top: 8px;">
-                        <div class="thermometer-fill thermometer-red" style="width: 80%;"></div>
-                    </div>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-red" style="width: 75%;"></div>
+                </div>
+                <div class="mb-3">
                     <textarea class="governance-input h-24" placeholder="PM-entered free text escalations...">Client approval delays affecting critical path - requires executive intervention to maintain handover date.</textarea>
                 </div>
             </div>
@@ -606,24 +572,18 @@
                     <span class="material-symbols-outlined text-amber-600">report_problem</span>
                     Client Concerns
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-red" style="width: 58%;"></div>
+                </div>
                 <div class="space-y-2">
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">1. Marble finish quality concerns</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 70%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">2. Revised tile samples approval pending</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-red" style="width: 45%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">3. MEP coordination with client systems</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -634,30 +594,21 @@
                     <span class="material-symbols-outlined text-green-600">thumb_up</span>
                     Client Satisfaction
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-green" style="width: 86%;"></div>
+                </div>
                 <div class="space-y-2">
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">1. Quality Rating</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">2. Schedule Rating</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 80%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">3. Communication Rating</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
-                        </div>
                     </div>
-                    <div class="flex items-center justify-between py-2">
+                    <div class="py-2">
                         <span class="text-sm text-slate-700 dark:text-slate-300">4. Overall Satisfaction</span>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 85%;"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -668,24 +619,17 @@
                     <span class="material-symbols-outlined text-blue-600">change_circle</span>
                     Variation / Submission
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-amber" style="width: 73%;"></div>
+                </div>
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">VO-2026-045</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 85,000 - Approved</div>
-                        </div>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">VO-2026-045</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">AED 85,000 - Approved</div>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="governance-link">VO-2026-046</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 42,000 - Pending</div>
-                        </div>
-                        <div class="thermometer" style="width: 60px;">
-                            <div class="thermometer-fill thermometer-amber" style="width: 45%;"></div>
-                        </div>
+                    <div>
+                        <div class="governance-link">VO-2026-046</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">AED 42,000 - Pending</div>
                     </div>
                 </div>
             </div>
@@ -696,7 +640,10 @@
                     <span class="material-symbols-outlined text-slate-600">fact_check</span>
                     Change Control Register
                 </h3>
-                <div class="flex items-center justify-between mb-3">
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-green" style="width: 95%;"></div>
+                </div>
+                <div class="mb-3">
                     <div class="flex items-center space-x-4">
                         <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Fully updated:</span>
                         <label class="flex items-center space-x-2">
@@ -707,9 +654,6 @@
                             <input type="radio" name="changeControl" value="no" class="text-primary">
                             <span class="text-sm text-slate-700 dark:text-slate-300">NO</span>
                         </label>
-                    </div>
-                    <div class="thermometer" style="width: 70px;">
-                        <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
                     </div>
                 </div>
                 <div class="mt-3">
@@ -727,14 +671,14 @@
                     <span class="material-symbols-outlined text-green-600">trending_up</span>
                     Cash Flow Status
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-green" style="width: 68%;"></div>
+                </div>
                 <div class="flex items-center gap-3">
                     <div class="flex-1 h-6 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative">
                         <div class="progress-bar h-6 rounded-full flex items-center justify-end pr-3 text-white text-sm font-semibold" style="width: 68%;">
                             68% Received
                         </div>
-                    </div>
-                    <div class="thermometer" style="width: 60px;">
-                        <div class="thermometer-fill thermometer-green" style="width: 68%;"></div>
                     </div>
                 </div>
             </div>
@@ -745,6 +689,9 @@
                     <span class="material-symbols-outlined text-blue-600">bar_chart</span>
                     Cashflow Outlook
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-green" style="width: 92%;"></div>
+                </div>
                 <div class="space-y-3">
                     <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
                         <svg viewBox="0 0 300 160" class="w-full h-32">
@@ -799,47 +746,35 @@
                     <span class="material-symbols-outlined text-blue-600">payments</span>
                     Payment Milestones
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-amber" style="width: 57%;"></div>
+                </div>
                 <div class="space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-3">
                         <div>
                             <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Structural Completion</div>
                             <div class="text-sm text-slate-500 dark:text-slate-400">Due: 28 Feb 2026</div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <div class="font-bold text-slate-900 dark:text-slate-100">AED 580,000</div>
-                            </div>
-                            <div class="thermometer" style="width: 50px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 85%;"></div>
-                            </div>
+                        <div class="mt-1">
+                            <div class="font-bold text-slate-900 dark:text-slate-100">AED 580,000</div>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-3">
                         <div>
                             <div class="font-medium text-sm text-slate-900 dark:text-slate-100">MEP Rough-in</div>
                             <div class="text-sm text-slate-500 dark:text-slate-400">Due: 15 Mar 2026</div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <div class="font-bold text-slate-900 dark:text-slate-100">AED 420,000</div>
-                            </div>
-                            <div class="thermometer" style="width: 50px;">
-                                <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
-                            </div>
+                        <div class="mt-1">
+                            <div class="font-bold text-slate-900 dark:text-slate-100">AED 420,000</div>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center">
+                    <div>
                         <div>
                             <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Final Handover</div>
                             <div class="text-sm text-slate-500 dark:text-slate-400">Due: 30 Jun 2026</div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <div class="font-bold text-slate-900 dark:text-slate-100">AED 280,000</div>
-                            </div>
-                            <div class="thermometer" style="width: 50px;">
-                                <div class="thermometer-fill thermometer-red" style="width: 25%;"></div>
-                            </div>
+                        <div class="mt-1">
+                            <div class="font-bold text-slate-900 dark:text-slate-100">AED 280,000</div>
                         </div>
                     </div>
                 </div>
@@ -851,15 +786,13 @@
                     <span class="material-symbols-outlined text-primary">payments</span>
                     This Month's Payment Claim
                 </h3>
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-3xl font-bold text-slate-900 dark:text-slate-100">AED 485,000</div>
-                        <div class="text-sm text-slate-500 dark:text-slate-400">Submitted: 01 Feb 2026</div>
-                        <div class="text-sm text-green-600 font-medium">Status: Approved</div>
-                    </div>
-                    <div class="thermometer" style="width: 80px;">
-                        <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
-                    </div>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-green" style="width: 100%;"></div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-slate-900 dark:text-slate-100">AED 485,000</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">Submitted: 01 Feb 2026</div>
+                    <div class="text-sm text-green-600 font-medium">Status: Approved</div>
                 </div>
             </div>
 
@@ -869,42 +802,25 @@
                     <span class="material-symbols-outlined text-green-600">account_balance</span>
                     Finance Summary
                 </h3>
+                <div class="card-status-bar">
+                    <div class="card-status-fill card-status-fill-green" style="width: 81%;"></div>
+                </div>
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-slate-600 dark:text-slate-400">Total Contract Value</span>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 2,450,000</span>
-                            <div class="thermometer" style="width: 40px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
-                            </div>
-                        </div>
+                        <span class="font-bold text-slate-900 dark:text-slate-100">AED 2,450,000</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-slate-600 dark:text-slate-400">Total Invoiced to Date</span>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,890,000</span>
-                            <div class="thermometer" style="width: 40px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 77%;"></div>
-                            </div>
-                        </div>
+                        <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,890,000</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-slate-600 dark:text-slate-400">Total Received to Date</span>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,666,200</span>
-                            <div class="thermometer" style="width: 40px;">
-                                <div class="thermometer-fill thermometer-amber" style="width: 68%;"></div>
-                            </div>
-                        </div>
+                        <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,666,200</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-slate-600 dark:text-slate-400">Total Works Completed</span>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,925,000</span>
-                            <div class="thermometer" style="width: 40px;">
-                                <div class="thermometer-fill thermometer-green" style="width: 79%;"></div>
-                            </div>
-                        </div>
+                        <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,925,000</span>
                     </div>
                 </div>
                 <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
