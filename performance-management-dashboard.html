@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Management Dashboard - Pinnacle Interiors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "brand-dark": "#1a2e3e",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .perf-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.15), 0 0 0 1px rgb(255 255 255 / 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .perf-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px -15px rgb(0 0 0 / 0.25);
+            border-color: #cbd5e1;
+        }
+        
+        .metric-box {
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-box:hover {
+            border-color: #137fec;
+            box-shadow: 0 8px 20px rgba(19, 127, 236, 0.15);
+        }
+        
+        .chart-placeholder {
+            background: linear-gradient(180deg, #5b8ba8 0%, #2c5770 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-height: 400px;
+        }
+        
+        .logo-hover {
+            transition: all 0.3s ease;
+        }
+        .logo-hover:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 8px rgba(19, 127, 236, 0.3));
+        }
+        
+        header {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.1);
+        }
+        
+        .star-filled {
+            color: #137fec;
+        }
+        
+        .star-empty {
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
+    <!-- Header Row -->
+    <header class="sticky top-0 z-50 w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <a href="dashboard.html" class="logo-hover flex items-center cursor-pointer">
+                        <div class="relative h-10 w-10 flex items-center justify-center">
+                            <svg class="h-8 w-8 text-[#1a2e3e] dark:text-white" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 80 C 40 75, 60 60, 80 20 L 80 80 Z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col leading-none ml-1">
+                            <span class="text-sm font-bold tracking-tight text-[#1a2e3e] dark:text-white uppercase">Pinnacle</span>
+                            <span class="text-[10px] tracking-[0.2em] text-[#1a2e3e] dark:text-slate-400 uppercase">Interiors</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">PERFORMANCE MANAGEMENT DASHBOARD</div>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">Report Date:</span>
+                    <span class="font-semibold text-primary">05 Feb 2026</span>
+                </div>
+                <a href="dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Dashboard
+                </a>
+                <a href="finance-overview.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Finance
+                </a>
+                <a href="business-development-dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Business Dev
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-10 max-w-[1900px] mx-auto w-full">
+        
+        <!-- Top Row: Sales, Customer Satisfaction, Metric Boxes -->
+        <div class="grid grid-cols-12 gap-10 mb-10">
+            
+            <!-- Sales -->
+            <div class="col-span-2 perf-card text-center">
+                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Sales</div>
+                <div class="text-5xl font-black text-primary mb-3">$345K</div>
+                <div class="flex items-center justify-center gap-2 text-green-600">
+                    <span class="material-symbols-outlined text-xl">trending_up</span>
+                    <span class="text-lg font-bold">8%</span>
+                </div>
+                <div class="text-xs text-slate-500 mt-2">Since last month</div>
+            </div>
+            
+            <!-- Customer Satisfaction -->
+            <div class="col-span-2 perf-card text-center">
+                <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Customer Satisfaction</div>
+                <div class="text-5xl font-black text-slate-800 mb-3">4.5</div>
+                <div class="flex items-center justify-center gap-1 mb-2">
+                    <span class="material-symbols-outlined text-3xl star-filled" style="font-variation-settings: 'FILL' 1, 'wght' 400;">star</span>
+                    <span class="material-symbols-outlined text-3xl star-filled" style="font-variation-settings: 'FILL' 1, 'wght' 400;">star</span>
+                    <span class="material-symbols-outlined text-3xl star-filled" style="font-variation-settings: 'FILL' 1, 'wght' 400;">star</span>
+                    <span class="material-symbols-outlined text-3xl star-filled" style="font-variation-settings: 'FILL' 1, 'wght' 400;">star</span>
+                    <span class="material-symbols-outlined text-3xl star-empty" style="font-variation-settings: 'FILL' 0, 'wght' 400;">star</span>
+                </div>
+                <div class="text-xs text-slate-500 mt-2">Current score</div>
+            </div>
+            
+            <!-- Metric Boxes -->
+            <div class="col-span-8 grid grid-cols-4 gap-6">
+                <div class="metric-box">
+                    <div class="text-base font-bold text-slate-700 mb-2">Total Payroll</div>
+                </div>
+                <div class="metric-box">
+                    <div class="text-base font-bold text-slate-700 mb-2">YTD Payroll</div>
+                </div>
+                <div class="metric-box">
+                    <div class="text-base font-bold text-slate-700 mb-2">Headcount</div>
+                </div>
+                <div class="metric-box">
+                    <div class="text-base font-bold text-slate-700 mb-2">Avg Cost / Employee</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-12 gap-10">
+            
+            <!-- Left Column -->
+            <div class="col-span-4 space-y-10">
+                
+                <!-- Employee Productivity -->
+                <div class="perf-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Employee Productivity</h3>
+                    <svg viewBox="0 0 400 350" class="w-full h-80">
+                        <defs>
+                            <linearGradient id="productivityBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#137fec" />
+                                <stop offset="100%" style="stop-color:#0c5bb5" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Y-axis -->
+                        <line x1="40" y1="50" x2="40" y2="280" stroke="#cbd5e1" stroke-width="2"/>
+                        
+                        <!-- Bars -->
+                        <rect x="60" y="160" width="50" height="120" fill="url(#productivityBar)" rx="6"/>
+                        <text x="85" y="300" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Q1</text>
+                        
+                        <rect x="125" y="130" width="50" height="150" fill="url(#productivityBar)" rx="6"/>
+                        <text x="150" y="300" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Q2</text>
+                        
+                        <rect x="190" y="100" width="50" height="180" fill="url(#productivityBar)" rx="6"/>
+                        <text x="215" y="300" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Q3</text>
+                        
+                        <rect x="255" y="70" width="50" height="210" fill="url(#productivityBar)" rx="6"/>
+                        <text x="280" y="300" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Q4</text>
+                        
+                        <rect x="320" y="50" width="50" height="230" fill="url(#productivityBar)" rx="6"/>
+                        <text x="345" y="300" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Q4</text>
+                    </svg>
+                </div>
+                
+                <!-- Key Performance Indicators -->
+                <div class="perf-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Key Performance Indicators</h3>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-base font-semibold text-slate-700">Revenue Growth</span>
+                            <span class="text-2xl font-black text-green-600">+5%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-base font-semibold text-slate-700">Customer Churn</span>
+                            <span class="text-2xl font-black text-red-600">-3%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-base font-semibold text-slate-700">Avg. Resolution Time</span>
+                            <span class="text-2xl font-black text-red-600">-10%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Targets vs Actual -->
+                <div class="perf-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Targets vs. Actual</h3>
+                    <svg viewBox="0 0 400 250" class="w-full h-64">
+                        <defs>
+                            <linearGradient id="targetBar" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#1e3a8a" />
+                                <stop offset="100%" style="stop-color:#1e40af" />
+                            </linearGradient>
+                            <linearGradient id="actualBar" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#cbd5e1" />
+                                <stop offset="100%" style="stop-color:#94a3b8" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Revenue label -->
+                        <text x="20" y="85" text-anchor="start" class="text-base fill-slate-700 font-bold">Revenue</text>
+                        
+                        <!-- Revenue Target Bar -->
+                        <rect x="120" y="60" width="220" height="30" fill="url(#targetBar)" rx="4"/>
+                        
+                        <!-- Revenue Actual Bar -->
+                        <rect x="120" y="100" width="180" height="30" fill="url(#actualBar)" rx="4"/>
+                        
+                        <!-- Expenses label -->
+                        <text x="20" y="185" text-anchor="start" class="text-base fill-slate-700 font-bold">Expenses</text>
+                        
+                        <!-- Expenses Target Bar -->
+                        <rect x="120" y="160" width="180" height="30" fill="url(#targetBar)" rx="4"/>
+                        
+                        <!-- Expenses Actual Bar -->
+                        <rect x="120" y="200" width="160" height="30" fill="url(#actualBar)" rx="4"/>
+                    </svg>
+                    
+                    <!-- Legend -->
+                    <div class="flex items-center justify-center gap-8 mt-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-4 bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] rounded"></div>
+                            <span class="text-sm font-bold text-slate-700">Target</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-4 bg-gradient-to-r from-[#cbd5e1] to-[#94a3b8] rounded"></div>
+                            <span class="text-sm font-bold text-slate-700">Actual</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Section -->
+            <div class="col-span-8 space-y-10">
+                
+                <!-- Top Charts -->
+                <div class="grid grid-cols-2 gap-10">
+                    <!-- Payroll Trend Chart -->
+                    <div class="chart-placeholder">
+                        <span>Payroll Trend Chart</span>
+                    </div>
+                    
+                    <!-- Cost Breakdown -->
+                    <div class="chart-placeholder">
+                        <span>Cost Breakdown</span>
+                    </div>
+                </div>
+                
+                <!-- Bottom Section -->
+                <div class="grid grid-cols-3 gap-10">
+                    
+                    <!-- Marketing Health Score -->
+                    <div class="perf-card text-center">
+                        <h3 class="text-xl font-black text-slate-800 mb-6 border-b-2 border-slate-300 pb-4 uppercase">Marketing Health Score</h3>
+                        <div class="text-8xl font-black text-primary mb-4">85</div>
+                    </div>
+                    
+                    <!-- Key Wins -->
+                    <div class="perf-card">
+                        <h3 class="text-xl font-black text-slate-800 mb-6 border-b-2 border-slate-300 pb-4 uppercase">Key Wins</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span class="text-base font-semibold text-slate-700">Huqqi</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span class="text-base font-semibold text-slate-700">Gavuwin</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span class="text-base font-semibold text-slate-700">HUOAlbiker</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span class="text-base font-semibold text-slate-700">The Maker Effect</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span class="text-base font-semibold text-slate-700">Dubai Design Week</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Major Risks/Challenges -->
+                    <div class="perf-card">
+                        <h3 class="text-xl font-black text-slate-800 mb-6 border-b-2 border-slate-300 pb-4 uppercase">Major Risks / Challenges</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-red-600 mt-0.5">error</span>
+                                <span class="text-base font-semibold text-slate-700">Low lead generation</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-red-600 mt-0.5">error</span>
+                                <span class="text-base font-semibold text-slate-700">Underperform/y channels</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-red-600 mt-0.5">error</span>
+                                <span class="text-base font-semibold text-slate-700">Decreasing ROI</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

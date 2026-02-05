@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#149cb8",
+                        "background-light": "#f8fbfc",
+                        "background-dark": "#111e21",
+                        "charcoal": "#1a1a1a",
+                        "off-white": "#fcfcfc"
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .underline-input {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #d1d5db;
+            background: transparent !important;
+        }
+        .underline-input:focus {
+            border-bottom: 2px solid #149cb8;
+            outline: none;
+            box-shadow: none;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #149cb8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 14px;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 300;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display overflow-hidden">
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="flex flex-col items-center">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading Dashboard...</div>
+    </div>
+</div>
+
+<div class="flex h-screen w-full">
+<!-- Left Column: Brand & Visuals (60%) -->
+<div class="hidden lg:flex lg:w-[60%] relative flex-col items-center justify-center p-12 overflow-hidden">
+<!-- Background Image with subtle warm tint -->
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover" data-alt="Minimalist luxury interior architectural space with clean lines" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBe0wCWp9CJEVQJ1mAVW9MSTWpt5ArLiFHu9HigRispYzzxSt8da3rnqZJBbhFzAsAytDIqXFbwmYSz30B7T6AUhAjSf2wFuNZWUTLApeWTdBFxSju3VuFkKM3RfwMY-SrLKHhv7vKJOB2DWC4la1Jorp6fXXeWr_ysJxRA9MLWPOsUoo56bRcUUIK6olcJivCpfh6MewbPi-xx-m2wmf2vZlirUD7ZmeZyqq41oTA899Y-9ZV4mIH-HBKdDQ3nXQjTMY6KLnDEKhk");'>
+<!-- Warm Tint Overlay -->
+<div class="absolute inset-0 bg-[#3a2a1a]/20 mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-black/30"></div>
+</div>
+<!-- Logo and Tagline -->
+<div class="relative z-10 flex flex-col items-center text-white">
+<h1 class="text-4xl font-extralight tracking-[0.4em] uppercase mb-4">Pinnacle Interiors</h1>
+<div class="w-24 h-[1px] bg-white/60 mb-6"></div>
+<p class="text-sm font-light tracking-[0.3em] uppercase opacity-90">Designing spaces with purpose</p>
+</div>
+</div>
+<!-- Right Column: Login Panel (40%) -->
+<div class="w-full lg:w-[40%] bg-off-white dark:bg-background-dark flex flex-col justify-between p-8 md:p-16 lg:p-20 shadow-2xl z-20">
+<!-- Mobile Logo (Visible only on small screens) -->
+<div class="lg:hidden flex flex-col items-center mb-12">
+<h1 class="text-[#0e191b] dark:text-white text-xl font-bold tracking-[0.1em] uppercase">Pinnacle</h1>
+<div class="w-8 h-[1px] bg-primary mt-1"></div>
+</div>
+<div class="flex flex-col flex-grow justify-center max-w-md mx-auto w-full">
+<!-- Heading -->
+<div class="mb-10">
+<h2 class="text-[#0e191b] dark:text-white text-[32px] font-light leading-tight tracking-tight mb-2">Welcome back</h2>
+<p class="text-[#4e8b97] text-sm font-normal leading-normal tracking-wide">Please sign in to continue to your dashboard</p>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-8" onsubmit="event.preventDefault(); showLoading();">
+<div class="flex flex-col">
+<label class="text-[#0e191b] dark:text-white text-xs font-semibold uppercase tracking-widest pb-1">Email</label>
+<input class="underline-input py-4 text-[#0e191b] dark:text-white text-base font-light placeholder:text-[#4e8b97]/50" placeholder="name@pinnacle.com" type="email"/>
+</div>
+<div class="flex flex-col relative">
+<label class="text-[#0e191b] dark:text-white text-xs font-semibold uppercase tracking-widest pb-1">Password</label>
+<input class="underline-input py-4 pr-10 text-[#0e191b] dark:text-white text-base font-light placeholder:text-[#4e8b97]/50" placeholder="••••••••" type="password"/>
+<button class="absolute right-0 bottom-4 text-[#4e8b97] hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="text-sm text-[#4e8b97] group-hover:text-primary transition-colors">Remember me</span>
+</label>
+<a class="text-xs font-medium text-[#4e8b97] hover:text-primary tracking-wide uppercase transition-colors" href="#">Forgot password?</a>
+</div>
+<button class="mt-4 bg-charcoal hover:bg-black text-white py-5 rounded-lg font-medium tracking-[0.1em] uppercase transition-all flex items-center justify-center gap-2" type="submit">
+                        Sign In
+                    </button>
+</form>
+</div>
+<!-- Footer -->
+<div class="pt-10 flex flex-col items-center">
+<div class="flex gap-4 mb-4">
+<a class="text-[#4e8b97] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</a>
+<a class="text-[#4e8b97] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</a>
+</div>
+<p class="text-[#4e8b97] text-[10px] uppercase tracking-[0.2em] font-light text-center">
+                    © 2024 Pinnacle Interiors. All rights reserved.
+                </p>
+</div>
+</div>
+</div>
+
+<script>
+    function showLoading() {
+        const overlay = document.getElementById('loadingOverlay');
+        overlay.classList.add('show');
+        
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1500);
+    }
+</script>
+</body></html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QS & Estimation Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "brand-dark": "#1a2e3e",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .qs-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.15), 0 0 0 1px rgb(255 255 255 / 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .qs-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px -15px rgb(0 0 0 / 0.25);
+            border-color: #cbd5e1;
+        }
+        
+        .sidebar-card {
+            background: linear-gradient(135deg, #137fec, #1e40af);
+            color: white;
+            border-radius: 12px;
+            padding: 20px 28px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px -5px rgba(19, 127, 236, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .sidebar-card:hover {
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+            transform: translateX(6px) scale(1.02);
+            box-shadow: 0 12px 30px -8px rgba(19, 127, 236, 0.6);
+        }
+        
+        .risk-item {
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ef4444;
+            background: linear-gradient(90deg, #fef2f2, #ffffff);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);
+        }
+        
+        .risk-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+            border-left-width: 6px;
+        }
+        
+        .analysis-item {
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-left: 4px solid #10b981;
+            background: linear-gradient(90deg, #f0fdf4, #ffffff);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
+        }
+        
+        .analysis-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            border-left-width: 6px;
+        }
+        
+        header {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.1);
+        }
+        
+        .logo-hover {
+            transition: all 0.3s ease;
+        }
+        .logo-hover:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 8px rgba(19, 127, 236, 0.3));
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
+    <!-- Header Row -->
+    <header class="sticky top-0 z-50 w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <a href="dashboard.html" class="logo-hover flex items-center cursor-pointer">
+                        <div class="relative h-10 w-10 flex items-center justify-center">
+                            <svg class="h-8 w-8 text-[#1a2e3e] dark:text-white" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 80 C 40 75, 60 60, 80 20 L 80 80 Z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col leading-none ml-1">
+                            <span class="text-sm font-bold tracking-tight text-[#1a2e3e] dark:text-white uppercase">Pinnacle</span>
+                            <span class="text-[10px] tracking-[0.2em] text-[#1a2e3e] dark:text-slate-400 uppercase">Interiors</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">QS & ESTIMATION DASHBOARD</div>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">Data Date:</span>
+                    <span class="font-semibold text-primary">05 Feb 2026</span>
+                </div>
+                <a href="dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Dashboard
+                </a>
+                <a href="project-governance.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Governance
+                </a>
+                <a href="finance-overview.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Finance
+                </a>
+                <a href="business-development-dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Business Dev
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex gap-8 p-8">
+        
+        <!-- Left Sidebar -->
+        <div class="w-80 flex-shrink-0 space-y-8">
+            <!-- Pre Tender - RFP Section -->
+            <div class="bg-white rounded-2xl p-10 shadow-2xl border-2 border-slate-200">
+                <h3 class="text-xl font-black text-slate-800 mb-8 uppercase tracking-wide border-b-2 border-slate-300 pb-4">Pre Tender - RFP</h3>
+                
+                <div class="sidebar-card cursor-pointer">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-black mb-2">35</div>
+                        <div class="text-sm font-bold uppercase tracking-wider">RFP Received</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-card cursor-pointer">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-black mb-2">25</div>
+                        <div class="text-sm font-bold uppercase tracking-wider">RFP Accepted</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-card cursor-pointer" style="background: linear-gradient(135deg, #dc2626, #991b1b);">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-black mb-2">8</div>
+                        <div class="text-sm font-bold uppercase tracking-wider">RFP Rejected</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-card cursor-pointer" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <div class="relative z-10">
+                        <div class="text-5xl font-black mb-2">2</div>
+                        <div class="text-sm font-bold uppercase tracking-wider">RFP On Hold</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post Tender - RFP Section -->
+            <div class="bg-white rounded-2xl p-10 shadow-2xl border-2 border-slate-200">
+                <h3 class="text-xl font-black text-slate-800 mb-8 uppercase tracking-wide border-b-2 border-slate-300 pb-4">Post Tender - RFP</h3>
+                
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-white rounded-xl hover:from-blue-100 hover:to-blue-50 transition-all cursor-pointer shadow-sm hover:shadow-md border border-blue-100">
+                        <span class="text-primary mt-0.5 text-lg font-bold">•</span>
+                        <span class="font-semibold text-slate-700">Variation Orders & substantiation</span>
+                    </li>
+                    <li class="flex items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-white rounded-xl hover:from-blue-100 hover:to-blue-50 transition-all cursor-pointer shadow-sm hover:shadow-md border border-blue-100">
+                        <span class="text-primary mt-0.5 text-lg font-bold">•</span>
+                        <span class="font-semibold text-slate-700">LPO verification & certification</span>
+                    </li>
+                    <li class="flex items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-white rounded-xl hover:from-blue-100 hover:to-blue-50 transition-all cursor-pointer shadow-sm hover:shadow-md border border-blue-100">
+                        <span class="text-primary mt-0.5 text-lg font-bold">•</span>
+                        <span class="font-semibold text-slate-700">Post Tender Quantification for Procurement Team</span>
+                    </li>
+                    <li class="flex items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-white rounded-xl hover:from-blue-100 hover:to-blue-50 transition-all cursor-pointer shadow-sm hover:shadow-md border border-blue-100">
+                        <span class="text-primary mt-0.5 text-lg font-bold">•</span>
+                        <span class="font-semibold text-slate-700">Payment Application preparation</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div class="flex-1 space-y-8">
+            
+            <!-- Top Row: Charts -->
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Sector-wise Distribution of RFPs Received -->
+                <div class="qs-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-6 border-b-2 border-slate-300 pb-3">
+                        Sector-wise Distribution of RFPs <span class="text-primary">Received</span>
+                    </h3>
+                    <svg viewBox="0 0 400 400" class="w-full h-80">
+                        <defs>
+                            <linearGradient id="buildBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#f97316" />
+                                <stop offset="100%" style="stop-color:#ea580c" />
+                            </linearGradient>
+                            <linearGradient id="designBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#fbbf24" />
+                                <stop offset="100%" style="stop-color:#f59e0b" />
+                            </linearGradient>
+                            <linearGradient id="bothBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#fb923c" />
+                                <stop offset="100%" style="stop-color:#f97316" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Y-axis labels -->
+                        <text x="35" y="70" text-anchor="end" class="text-sm fill-slate-600 font-semibold">20</text>
+                        <text x="35" y="130" text-anchor="end" class="text-sm fill-slate-600 font-semibold">15</text>
+                        <text x="35" y="190" text-anchor="end" class="text-sm fill-slate-600 font-semibold">10</text>
+                        <text x="35" y="250" text-anchor="end" class="text-sm fill-slate-600 font-semibold">5</text>
+                        <text x="35" y="280" text-anchor="end" class="text-sm fill-slate-600 font-semibold">0</text>
+                        
+                        <!-- Grid lines -->
+                        <line x1="45" y1="70" x2="370" y2="70" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="45" y1="130" x2="370" y2="130" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="45" y1="190" x2="370" y2="190" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="45" y1="250" x2="370" y2="250" stroke="#e5e7eb" stroke-width="1.5"/>
+                        
+                        <!-- Y-axis -->
+                        <line x1="45" y1="60" x2="45" y2="280" stroke="#475569" stroke-width="2"/>
+                        <line x1="45" y1="280" x2="370" y2="280" stroke="#475569" stroke-width="2"/>
+                        
+                        <!-- Bars with shadow -->
+                        <defs>
+                            <filter id="barShadow">
+                                <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+                            </filter>
+                        </defs>
+                        
+                        <rect x="80" y="70" width="80" height="210" fill="url(#buildBar)" rx="6" filter="url(#barShadow)"/>
+                        <text x="120" y="55" text-anchor="middle" class="text-2xl fill-slate-800 font-black">15</text>
+                        <text x="120" y="305" text-anchor="middle" class="text-base fill-slate-700 font-bold">Build</text>
+                        
+                        <rect x="180" y="190" width="80" height="90" fill="url(#designBar)" rx="6" filter="url(#barShadow)"/>
+                        <text x="220" y="175" text-anchor="middle" class="text-2xl fill-slate-800 font-black">5</text>
+                        <text x="220" y="305" text-anchor="middle" class="text-base fill-slate-700 font-bold">Design</text>
+                        
+                        <rect x="280" y="130" width="80" height="150" fill="url(#bothBar)" rx="6" filter="url(#barShadow)"/>
+                        <text x="320" y="115" text-anchor="middle" class="text-2xl fill-slate-800 font-black">9</text>
+                        <text x="320" y="305" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Build &</text>
+                        <text x="320" y="320" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Design</text>
+                    </svg>
+                </div>
+                
+                <!-- Registered Value of Confirmed Jobs Monthly -->
+                <div class="qs-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-6 border-b-2 border-slate-300 pb-3">
+                        Registered Value of Confirmed Jobs Monthly
+                    </h3>
+                    <svg viewBox="0 0 400 400" class="w-full h-80">
+                        <defs>
+                            <linearGradient id="valueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#dc2626;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#dc2626;stop-opacity:0.05" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Y-axis scale -->
+                        <text x="35" y="80" text-anchor="end" class="text-sm fill-slate-600 font-semibold">5</text>
+                        <text x="35" y="130" text-anchor="end" class="text-sm fill-slate-600 font-semibold">4</text>
+                        <text x="35" y="180" text-anchor="end" class="text-sm fill-slate-600 font-semibold">3</text>
+                        <text x="35" y="230" text-anchor="end" class="text-sm fill-slate-600 font-semibold">2</text>
+                        <text x="35" y="280" text-anchor="end" class="text-sm fill-slate-600 font-semibold">0</text>
+                        
+                        <!-- Grid lines -->
+                        <line x1="45" y1="80" x2="370" y2="80" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="45" y1="130" x2="370" y2="130" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="45" y1="180" x2="370" y2="180" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="45" y1="230" x2="370" y2="230" stroke="#e5e7eb" stroke-width="1.5"/>
+                        
+                        <!-- Axes -->
+                        <line x1="45" y1="70" x2="45" y2="280" stroke="#475569" stroke-width="2"/>
+                        <line x1="45" y1="280" x2="370" y2="280" stroke="#475569" stroke-width="2"/>
+                        
+                        <!-- Bars with gradient -->
+                        <defs>
+                            <linearGradient id="redBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#dc2626" />
+                                <stop offset="100%" style="stop-color:#991b1b" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <rect x="55" y="110" width="22" height="170" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="82" y="160" width="22" height="120" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="109" y="130" width="22" height="150" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="136" y="90" width="22" height="190" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="163" y="150" width="22" height="130" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="190" y="140" width="22" height="140" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="217" y="170" width="22" height="110" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="244" y="130" width="22" height="150" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="271" y="110" width="22" height="170" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="298" y="155" width="22" height="125" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="325" y="140" width="22" height="140" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        <rect x="352" y="145" width="22" height="135" fill="url(#redBar)" rx="4" filter="url(#barShadow)"/>
+                        
+                        <!-- X-axis labels -->
+                        <text x="66" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W1</text>
+                        <text x="93" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W2</text>
+                        <text x="120" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W3</text>
+                        <text x="147" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W4</text>
+                        <text x="174" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W5</text>
+                        <text x="201" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W6</text>
+                        <text x="228" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W7</text>
+                        <text x="255" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W8</text>
+                        <text x="282" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W9</text>
+                        <text x="309" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W10</text>
+                        <text x="336" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W11</text>
+                        <text x="363" y="300" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">W12</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Middle Row: Tasks and Confirmed Jobs -->
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Daily Task List -->
+                <div class="qs-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-6 text-center border-b-2 border-slate-300 pb-3">Daily Task List</h3>
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 h-32 flex items-center justify-center border border-slate-200 shadow-inner">
+                        <p class="text-base text-slate-600 italic font-medium">Link to task management system</p>
+                    </div>
+                    <div class="mt-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-5 border border-slate-200 shadow-sm">
+                        <h4 class="text-base font-bold text-slate-800 mb-2">Weekly Critical Activities</h4>
+                        <p class="text-sm text-slate-600 italic">Activity tracking dashboard</p>
+                    </div>
+                    <div class="mt-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-5 border border-slate-200 shadow-sm">
+                        <h4 class="text-base font-bold text-slate-800 mb-2">Submission timelines</h4>
+                        <p class="text-sm text-slate-600 italic">Timeline management</p>
+                    </div>
+                </div>
+                
+                <!-- Sector-wise Distribution of Confirmed Jobs -->
+                <div class="qs-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-6 border-b-2 border-slate-300 pb-3">
+                        Sector-wise of Distribution of <span class="text-green-600">confirmed</span> jobs
+                    </h3>
+                    <svg viewBox="0 0 300 400" class="w-full h-80">
+                        <defs>
+                            <linearGradient id="confirmBuild" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#f97316" />
+                                <stop offset="100%" style="stop-color:#ea580c" />
+                            </linearGradient>
+                            <linearGradient id="confirmDesign" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#fbbf24" />
+                                <stop offset="100%" style="stop-color:#f59e0b" />
+                            </linearGradient>
+                            <linearGradient id="confirmBoth" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#fb923c" />
+                                <stop offset="100%" style="stop-color:#f97316" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Y-axis labels -->
+                        <text x="30" y="90" text-anchor="end" class="text-sm fill-slate-600 font-semibold">10</text>
+                        <text x="30" y="180" text-anchor="end" class="text-sm fill-slate-600 font-semibold">5</text>
+                        <text x="30" y="270" text-anchor="end" class="text-sm fill-slate-600 font-semibold">0</text>
+                        
+                        <!-- Grid lines -->
+                        <line x1="40" y1="90" x2="260" y2="90" stroke="#e5e7eb" stroke-width="1.5"/>
+                        <line x1="40" y1="180" x2="260" y2="180" stroke="#e5e7eb" stroke-width="1.5"/>
+                        
+                        <!-- Axes -->
+                        <line x1="40" y1="80" x2="40" y2="270" stroke="#475569" stroke-width="2"/>
+                        <line x1="40" y1="270" x2="260" y2="270" stroke="#475569" stroke-width="2"/>
+                        
+                        <!-- Bars -->
+                        <rect x="60" y="110" width="50" height="160" fill="url(#confirmBuild)" rx="6" filter="url(#barShadow)"/>
+                        <text x="85" y="95" text-anchor="middle" class="text-2xl fill-slate-800 font-black">9</text>
+                        <text x="85" y="295" text-anchor="middle" class="text-base fill-slate-700 font-bold">Build</text>
+                        
+                        <rect x="125" y="200" width="50" height="70" fill="url(#confirmDesign)" rx="6" filter="url(#barShadow)"/>
+                        <text x="150" y="185" text-anchor="middle" class="text-2xl fill-slate-800 font-black">4</text>
+                        <text x="150" y="295" text-anchor="middle" class="text-base fill-slate-700 font-bold">Design</text>
+                        
+                        <rect x="190" y="145" width="50" height="125" fill="url(#confirmBoth)" rx="6" filter="url(#barShadow)"/>
+                        <text x="215" y="130" text-anchor="middle" class="text-2xl fill-slate-800 font-black">7</text>
+                        <text x="215" y="295" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Build &</text>
+                        <text x="215" y="310" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Design</text>
+                    </svg>
+                </div>
+                
+                <!-- Major Risks -->
+                <div class="qs-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-6 text-center border-b-2 border-slate-300 pb-3">Major Risks</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="risk-item">
+                            <span class="text-slate-700 font-medium">- Inaccurate/ Incomplete Data</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="text-slate-700 font-medium">- Dependence on limited vendors</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="text-slate-700 font-medium">- Aggressive negotiation & discount to client</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="text-slate-700 font-medium">- Delays in RFI Responses from client</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="text-slate-700 font-medium">- Limited Team Capacity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Row: Resources and Analysis -->
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Resource Allocation -->
+                <div class="qs-card">
+                    <h3 class="text-2xl font-black text-slate-800 mb-6 text-center border-b-2 border-slate-300 pb-4">
+                        Resource Allocation and Team Members Activity Chart
+                    </h3>
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 mb-6 border border-slate-200 shadow-inner">
+                        <p class="text-base text-slate-700 text-center font-semibold mb-2">- Link to excel file of activity chart</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-5 hover:from-blue-100 hover:to-blue-200 transition-all cursor-pointer shadow-md hover:shadow-xl transform hover:scale-[1.02]">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-primary text-2xl">link</span>
+                                <span class="text-base font-bold text-slate-800">Hyper link - ESTIMATION ENQUIRY FOLDER / PROJECT NAME</span>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-5 hover:from-blue-100 hover:to-blue-200 transition-all cursor-pointer shadow-md hover:shadow-xl transform hover:scale-[1.02]">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-primary text-2xl">link</span>
+                                <span class="text-base font-bold text-slate-800">Hyper link - ODOO LEAVES CHART</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analysis -->
+                <div class="qs-card">
+                    <h3 class="text-2xl font-black text-slate-800 mb-6 text-center border-b-2 border-slate-300 pb-4">Analysis</h3>
+                    <div class="space-y-3 text-base">
+                        <div class="analysis-item">
+                            <span class="text-slate-700 font-medium">- Win Ratio : Quoted vs confirmed</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span class="text-slate-700 font-medium">- Average turn around time</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span class="text-slate-700 font-medium">- New supplier/vendor introduction</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span class="text-slate-700 font-medium">- Estimation vs cost overruns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

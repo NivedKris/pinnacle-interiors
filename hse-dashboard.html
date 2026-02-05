@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSE Dashboard - Pinnacle Interiors</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "brand-dark": "#1a2e3e",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .hse-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.15), 0 0 0 1px rgb(255 255 255 / 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hse-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px -15px rgb(0 0 0 / 0.25);
+            border-color: #cbd5e1;
+        }
+        
+        .safety-banner {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px -10px rgba(220, 38, 38, 0.5);
+        }
+        
+        .safety-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+        
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .incident-item {
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-left: 5px solid #dc2626;
+            background: linear-gradient(90deg, #fef2f2, #ffffff);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 6px rgba(220, 38, 38, 0.12);
+        }
+        
+        .incident-item:hover {
+            transform: translateX(6px);
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.25);
+            border-left-width: 7px;
+        }
+        
+        .logo-hover {
+            transition: all 0.3s ease;
+        }
+        .logo-hover:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 8px rgba(19, 127, 236, 0.3));
+        }
+        
+        header {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.1);
+        }
+        
+        .pie-segment {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .pie-segment:hover {
+            opacity: 0.8;
+            filter: brightness(1.1) drop-shadow(0 6px 12px rgba(220, 38, 38, 0.4));
+            transform: scale(1.02);
+            transform-origin: center;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
+    <!-- Header Row -->
+    <header class="sticky top-0 z-50 w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <a href="dashboard.html" class="logo-hover flex items-center cursor-pointer">
+                        <div class="relative h-10 w-10 flex items-center justify-center">
+                            <svg class="h-8 w-8 text-[#1a2e3e] dark:text-white" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 80 C 40 75, 60 60, 80 20 L 80 80 Z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col leading-none ml-1">
+                            <span class="text-sm font-bold tracking-tight text-[#1a2e3e] dark:text-white uppercase">Pinnacle</span>
+                            <span class="text-[10px] tracking-[0.2em] text-[#1a2e3e] dark:text-slate-400 uppercase">Interiors</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">HSE DASHBOARD</div>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">Report Date:</span>
+                    <span class="font-semibold text-primary">05 Feb 2026</span>
+                </div>
+                <a href="dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Dashboard
+                </a>
+                <a href="project-governance.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Projects
+                </a>
+                <a href="procurement-manager-dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Procurement
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-10 max-w-[1900px] mx-auto w-full">
+        
+        <!-- Safety Banner -->
+        <div class="safety-banner mb-10">
+            <div class="relative z-10 grid grid-cols-5 gap-8 items-center">
+                <!-- Days Without Injury -->
+                <div class="col-span-2">
+                    <div class="text-sm font-bold uppercase tracking-widest mb-2 text-white/90">Days Without Injury</div>
+                    <div class="text-8xl font-black text-white mb-2">760</div>
+                    <div class="text-base font-semibold text-white/90">days</div>
+                    <div class="text-sm text-white/80 mt-2">Since 05/1/2023 - Over 2 yrs</div>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="col-span-3 grid grid-cols-4 gap-6">
+                    <!-- Near Miss -->
+                    <div class="stat-box text-center">
+                        <span class="material-symbols-outlined text-white" style="font-size: 56px; font-weight: 300;">warning</span>
+                        <div class="text-4xl font-black text-white mb-2 mt-3">3</div>
+                        <div class="text-sm font-bold uppercase tracking-wide text-white/90">Near Miss</div>
+                    </div>
+                    
+                    <!-- First Aid -->
+                    <div class="stat-box text-center">
+                        <span class="material-symbols-outlined text-white" style="font-size: 56px; font-weight: 300;">medical_services</span>
+                        <div class="text-4xl font-black text-white mb-2 mt-3">10</div>
+                        <div class="text-sm font-bold uppercase tracking-wide text-white/90">First Aid</div>
+                    </div>
+                    
+                    <!-- Observations -->
+                    <div class="stat-box text-center">
+                        <span class="material-symbols-outlined text-white" style="font-size: 56px; font-weight: 300;">visibility</span>
+                        <div class="text-4xl font-black text-white mb-2 mt-3">6</div>
+                        <div class="text-sm font-bold uppercase tracking-wide text-white/90">Observations</div>
+                    </div>
+                    
+                    <!-- Site Audits -->
+                    <div class="stat-box text-center">
+                        <span class="material-symbols-outlined text-white" style="font-size: 56px; font-weight: 300;">assignment</span>
+                        <div class="text-4xl font-black text-white mb-2 mt-3">4</div>
+                        <div class="text-sm font-bold uppercase tracking-wide text-white/90">Site Audits</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-12 gap-10">
+            
+            <!-- Left Section -->
+            <div class="col-span-8 space-y-10">
+                
+                <!-- Row 1: Time of Accident, Trend Reports -->
+                <div class="grid grid-cols-12 gap-10">
+                    
+                    <!-- Time of Accident -->
+                    <div class="col-span-5 hse-card">
+                        <h3 class="text-2xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Time of Accident</h3>
+                        <div class="flex flex-col items-center">
+                            <svg viewBox="0 0 280 280" class="w-80 h-80">
+                                <defs>
+                                    <linearGradient id="nearMissGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#dc2626" />
+                                        <stop offset="100%" style="stop-color:#991b1b" />
+                                    </linearGradient>
+                                    <linearGradient id="minorAlarmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1e3a8a" />
+                                        <stop offset="100%" style="stop-color:#0f172a" />
+                                    </linearGradient>
+                                    <linearGradient id="propertyDamageGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#475569" />
+                                        <stop offset="100%" style="stop-color:#334155" />
+                                    </linearGradient>
+                                    <linearGradient id="seriousAlarmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#64748b" />
+                                        <stop offset="100%" style="stop-color:#475569" />
+                                    </linearGradient>
+                                    <filter id="dropShadow">
+                                        <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#dc2626" flood-opacity="0.3"/>
+                                    </filter>
+                                </defs>
+                                
+                                <!-- Near Miss (2) - Red, top segment -->
+                                <path class="pie-segment" d="M 140 140 L 140 40 A 100 100 0 0 1 216 90 Z" fill="url(#nearMissGradient)" filter="url(#dropShadow)" stroke="#991b1b" stroke-width="2">
+                                    <title>Near Miss: 2 incidents</title>
+                                </path>
+                                
+                                <!-- Minor Alarm (3) - Dark blue, right segment -->
+                                <path class="pie-segment" d="M 140 140 L 216 90 A 100 100 0 0 1 188 220 Z" fill="url(#minorAlarmGradient)" filter="url(#dropShadow)">
+                                    <title>Minor Alarm: 3 incidents</title>
+                                </path>
+                                
+                                <!-- Property Damage (2) - Gray, bottom segment -->
+                                <path class="pie-segment" d="M 140 140 L 188 220 A 100 100 0 0 1 64 90 Z" fill="url(#propertyDamageGradient)" filter="url(#dropShadow)">
+                                    <title>Property Damage: 2 incidents</title>
+                                </path>
+                                
+                                <!-- Serious Alarm (1) - Light gray, left segment -->
+                                <path class="pie-segment" d="M 140 140 L 64 90 A 100 100 0 0 1 140 40 Z" fill="url(#seriousAlarmGradient)" filter="url(#dropShadow)">
+                                    <title>Serious Alarm: 1 incident</title>
+                                </path>
+                                
+                                <!-- Center circle -->
+                                <circle cx="140" cy="140" r="60" fill="#ffffff" stroke="#e2e8f0" stroke-width="3"/>
+                            </svg>
+                            
+                            <!-- Legend -->
+                            <div class="grid grid-cols-2 gap-x-6 gap-y-3 mt-6 text-base">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-sm bg-gradient-to-br from-[#dc2626] to-[#991b1b]"></div>
+                                    <span class="font-bold text-slate-800">Near Miss (2)</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-sm bg-gradient-to-br from-[#1e3a8a] to-[#0f172a]"></div>
+                                    <span class="font-bold text-slate-800">Minor Alarm (3)</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-sm bg-gradient-to-br from-[#475569] to-[#334155]"></div>
+                                    <span class="font-bold text-slate-800">Property Damage (2)</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-sm bg-gradient-to-br from-[#64748b] to-[#475569]"></div>
+                                    <span class="font-bold text-slate-800">Serious Alarm (1)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trend Reports -->
+                    <div class="col-span-7 hse-card">
+                        <h3 class="text-2xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase flex items-center gap-3">
+                            <span class="text-red-600">⚠</span> Trend Reports
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">10/17/2023 - Site B</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Debris fell on head/jaw</div>
+                            </div>
+                            
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">8/31/2023 - Site A</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Tripped over cable</div>
+                            </div>
+                            
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">25/16/2023 - Site B</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Minor electrical shock</div>
+                            </div>
+                            
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">25/16/2023 - Site C</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Hammer fell from height</div>
+                            </div>
+                            
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">26/16/2023 - Site A</span>
+                                    <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">Human Error</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Back strain from lifting</div>
+                            </div>
+                            
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">11/10/2023 - Site B</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Equipment damage due to mishandling</div>
+                            </div>
+                            
+                            <div class="incident-item">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-sm font-black text-red-600">12/20/2023 - Site C</span>
+                                </div>
+                                <div class="text-base font-bold text-slate-700">Dust in eye</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Row 2: Compliance Chart -->
+                <div class="hse-card">
+                    <h3 class="text-2xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Compliance</h3>
+                    <svg viewBox="0 0 600 400" class="w-full h-96">
+                        <defs>
+                            <linearGradient id="complianceBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#dc2626" />
+                                <stop offset="100%" style="stop-color:#991b1b" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Y-axis -->
+                        <line x1="60" y1="50" x2="60" y2="320" stroke="#334155" stroke-width="2"/>
+                        <text x="50" y="60" text-anchor="end" class="text-sm fill-slate-600 font-semibold">250</text>
+                        <text x="50" y="140" text-anchor="end" class="text-sm fill-slate-600 font-semibold">200</text>
+                        <text x="50" y="230" text-anchor="end" class="text-sm fill-slate-600 font-semibold">100</text>
+                        <text x="50" y="295" text-anchor="end" class="text-sm fill-slate-600 font-semibold">50</text>
+                        <text x="50" y="325" text-anchor="end" class="text-sm fill-slate-600 font-semibold">0</text>
+                        
+                        <!-- Grid lines -->
+                        <line x1="60" y1="50" x2="540" y2="50" stroke="#e5e7eb" stroke-width="1" opacity="0.5"/>
+                        <line x1="60" y1="140" x2="540" y2="140" stroke="#e5e7eb" stroke-width="1" opacity="0.5"/>
+                        <line x1="60" y1="230" x2="540" y2="230" stroke="#e5e7eb" stroke-width="1" opacity="0.5"/>
+                        <line x1="60" y1="320" x2="540" y2="320" stroke="#e5e7eb" stroke-width="2" opacity="0.8"/>
+                        
+                        <!-- Bars -->
+                        <rect x="120" y="58" width="80" height="262" fill="url(#complianceBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="160" y="45" text-anchor="middle" class="text-2xl fill-slate-800 font-black">245</text>
+                        
+                        <rect x="260" y="93" width="80" height="227" fill="url(#complianceBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="300" y="80" text-anchor="middle" class="text-2xl fill-slate-800 font-black">189</text>
+                        
+                        <rect x="400" y="265" width="80" height="55" fill="url(#complianceBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="440" y="252" text-anchor="middle" class="text-2xl fill-slate-800 font-black">50</text>
+                        
+                        <!-- X-axis labels -->
+                        <text x="160" y="355" text-anchor="middle" class="text-base fill-slate-700 font-bold">Inspections</text>
+                        <text x="300" y="355" text-anchor="middle" class="text-base fill-slate-700 font-bold">Trainings</text>
+                        <text x="440" y="345" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Emergency</text>
+                        <text x="440" y="365" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Mock Drill</text>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Right Section -->
+            <div class="col-span-4 space-y-10">
+                
+                <!-- Location of Injury -->
+                <div class="hse-card">
+                    <h3 class="text-2xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Location of Injury</h3>
+                    <svg viewBox="0 0 500 500" class="w-full h-[600px]">
+                        <defs>
+                            <linearGradient id="injuryBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#dc2626" />
+                                <stop offset="100%" style="stop-color:#991b1b" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Gray reference bar on the left -->
+                        <rect x="30" y="50" width="30" height="380" fill="#cbd5e1" rx="4" opacity="0.4"/>
+                        
+                        <!-- Bars with values -->
+                        <rect x="80" y="150" width="40" height="280" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="100" y="135" text-anchor="middle" class="text-xl fill-slate-800 font-black">2</text>
+                        <text x="100" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Hand</text>
+                        
+                        <rect x="140" y="280" width="40" height="150" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="160" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="160" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Eye</text>
+                        
+                        <rect x="200" y="280" width="40" height="150" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="220" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="220" y="455" text-anchor="middle" class="text-xs fill-slate-700 font-bold">Foot/</text>
+                        <text x="220" y="470" text-anchor="middle" class="text-xs fill-slate-700 font-bold">Ankle</text>
+                        
+                        <rect x="260" y="280" width="40" height="150" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="280" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="280" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Leg</text>
+                        
+                        <rect x="320" y="280" width="40" height="150" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="340" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="340" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Spine</text>
+                        
+                        <rect x="380" y="280" width="40" height="150" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="400" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="400" y="455" text-anchor="middle" class="text-xs fill-slate-700 font-bold">Face/</text>
+                        <text x="400" y="470" text-anchor="middle" class="text-xs fill-slate-700 font-bold">Throat</text>
+                        
+                        <rect x="440" y="90" width="40" height="340" fill="url(#injuryBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="460" y="75" text-anchor="middle" class="text-xl fill-slate-800 font-black">3</text>
+                        <text x="460" y="455" text-anchor="middle" class="text-xs fill-slate-700 font-bold">More</text>
+                        <text x="460" y="470" text-anchor="middle" class="text-xs fill-slate-700 font-bold">Physical</text>
+                    </svg>
+                </div>
+                
+                <!-- Stage of Construction -->
+                <div class="hse-card">
+                    <h3 class="text-2xl font-black text-slate-800 mb-8 border-b-2 border-slate-300 pb-4 uppercase">Stage of Construction</h3>
+                    <svg viewBox="0 0 500 500" class="w-full h-[600px]">
+                        <defs>
+                            <linearGradient id="stageBar" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#dc2626" />
+                                <stop offset="100%" style="stop-color:#991b1b" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Gray reference bar on the left -->
+                        <rect x="30" y="50" width="30" height="380" fill="#cbd5e1" rx="4" opacity="0.4"/>
+                        
+                        <!-- Bars -->
+                        <rect x="90" y="150" width="50" height="280" fill="url(#stageBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="115" y="135" text-anchor="middle" class="text-xl fill-slate-800 font-black">2</text>
+                        <text x="115" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Partition</text>
+                        
+                        <rect x="165" y="150" width="50" height="280" fill="url(#stageBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="190" y="135" text-anchor="middle" class="text-xl fill-slate-800 font-black">2</text>
+                        <text x="190" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">MEP</text>
+                        
+                        <rect x="240" y="150" width="50" height="280" fill="url(#stageBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="265" y="135" text-anchor="middle" class="text-xl fill-slate-800 font-black">2</text>
+                        <text x="265" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Ceiling</text>
+                        
+                        <rect x="315" y="150" width="50" height="280" fill="url(#stageBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="340" y="135" text-anchor="middle" class="text-xl fill-slate-800 font-black">2</text>
+                        <text x="340" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Joinery</text>
+                        
+                        <rect x="390" y="280" width="50" height="150" fill="url(#stageBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="415" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="415" y="450" text-anchor="middle" class="text-xs fill-slate-700 font-bold">Water-</text>
+                        <text x="415" y="465" text-anchor="middle" class="text-xs fill-slate-700 font-bold">proofing</text>
+                        
+                        <rect x="462" y="280" width="50" height="150" fill="url(#stageBar)" rx="6" filter="url(#dropShadow)"/>
+                        <text x="487" y="265" text-anchor="middle" class="text-xl fill-slate-800 font-black">1</text>
+                        <text x="487" y="460" text-anchor="middle" class="text-sm fill-slate-700 font-bold">Screeding</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

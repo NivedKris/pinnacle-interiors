@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Finance Review</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "brand-dark": "#1a2e3e",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Finance Card Styles */
+        .finance-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .finance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #137fec, #3b82f6, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .finance-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -3px rgb(0 0 0 / 0.15), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        .finance-card:hover::before {
+            opacity: 1;
+        }
+        
+        .chart-container {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+        }
+        
+        .ar-card {
+            background: linear-gradient(135deg, #137fec, #3b82f6);
+            color: white;
+            border: none;
+        }
+        
+        .ar-card .ar-value {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .ar-card .ar-label {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        /* Table Styles */
+        .finance-table {
+            background: white;
+        }
+        
+        /* Tab Styles */
+        .tab-button {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .tab-button:hover {
+            color: #137fec;
+            background: #f1f5f9;
+        }
+        
+        .tab-button.active {
+            color: #137fec;
+            border-bottom-color: #137fec;
+            background: linear-gradient(to bottom, #eff6ff, transparent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .finance-table th {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #374151;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .finance-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #1f2937;
+        }
+        
+        .finance-table tr:hover {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        }
+        
+        .finance-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .finance-table .total-row {
+            background: linear-gradient(135deg, #137fec, #3b82f6);
+            color: white;
+            font-weight: 600;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .finance-table .total-row:hover {
+            background: linear-gradient(135deg, #137fec, #3b82f6);
+        }
+        
+        /* Tab Styles (same as dashboard) */
+        .tab-button {
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 8px;
+        }
+        
+        .tab-button:hover {
+            color: #334155;
+            background: #f8fafc;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .tab-button.active {
+            color: #137fec;
+            border-bottom-color: #137fec;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+        
+        .tab-header {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 20px;
+        }
+        
+        /* Logo hover effect */
+        .logo-hover {
+            transition: all 0.3s ease;
+        }
+        .logo-hover:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 8px rgba(19, 127, 236, 0.3));
+        }
+        
+        /* Header enhancements */
+        header {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900 min-h-screen flex flex-col font-display">
+    <!-- Header Row -->
+    <header class="sticky top-0 z-50 w-full bg-white border-b border-slate-200 px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <a href="javascript:history.back()" class="logo-hover flex items-center cursor-pointer">
+                        <div class="relative h-10 w-10 flex items-center justify-center">
+                            <svg class="h-8 w-8 text-[#1a2e3e]" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 80 C 40 75, 60 60, 80 20 L 80 80 Z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col leading-none ml-1">
+                            <span class="text-sm font-bold tracking-tight text-[#1a2e3e] uppercase">Pinnacle</span>
+                            <span class="text-[10px] tracking-[0.2em] text-[#1a2e3e] uppercase">Interiors</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-xl font-semibold text-slate-900">Weekly Finance Review</div>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500">Review Date:</span>
+                    <span class="font-semibold text-slate-700">13/11/2025</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500">Currency:</span>
+                    <span class="font-semibold text-primary">AED</span>
+                </div>
+                <a href="dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 hover:bg-slate-200 rounded text-slate-700 transition-colors">
+                    Dashboard
+                </a>
+                <a href="finance-overview.html" class="px-4 py-2 text-sm font-medium bg-slate-100 hover:bg-slate-200 rounded text-slate-700 transition-colors">
+                    Finance Overview
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8 max-w-7xl mx-auto w-full">
+        
+        <!-- Section 1: Key Financial Snapshot (Header Row) -->
+        <div class="grid grid-cols-1 gap-6 mb-8">
+            
+            <!-- Accounts Receivable Card -->
+            <div class="finance-card ar-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-4xl font-black ar-value mb-2">AED 6.7M</div>
+                        <div class="text-lg ar-label font-medium">Accounts Receivables</div>
+                        <div class="text-sm ar-label opacity-80 mt-1">Outstanding Invoices</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm ar-label opacity-80">vs Last Week</div>
+                        <div class="text-lg font-semibold ar-value">-8.2%</div>
+                        <div class="text-xs ar-label opacity-60">AED 7.3M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Financial Charts Section -->
+        <div class="grid grid-cols-1 gap-8 mb-8">
+            
+            <!-- Combined Sales & Purchase Trends -->
+            <div class="finance-card">
+                <h3 class="text-xl font-semibold text-slate-700 mb-4 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-blue-600">analytics</span>
+                    Financial Performance Trends (Jan - Nov 2025)
+                    <span class="text-sm font-normal text-slate-500 ml-2">AED in Millions</span>
+                </h3>
+                
+                <!-- Tab Buttons -->
+                <div class="flex gap-2 border-b border-slate-200 mb-6">
+                    <button class="tab-button active" onclick="switchTab('sales')">
+                        <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">trending_up</span>
+                        Sales Trend
+                    </button>
+                    <button class="tab-button" onclick="switchTab('purchase')">
+                        <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">shopping_cart</span>
+                        Purchase Trends
+                    </button>
+                </div>
+                
+                <!-- Sales Trend Tab Content -->
+                <div id="sales-tab" class="tab-content active">
+                <div class="chart-container" style="padding: 30px;">
+                    <svg viewBox="0 0 900 400" class="w-full" style="height: 300px;">
+                        <!-- Enhanced gradient definitions -->
+                        <defs>
+                            <linearGradient id="salesGradientDetailed" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#137fec;stop-opacity:0.4" />
+                                <stop offset="100%" style="stop-color:#137fec;stop-opacity:0.1" />
+                            </linearGradient>
+                            <filter id="shadow">
+                                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Background grid -->
+                        <g stroke="#e2e8f0" stroke-width="0.5" opacity="0.5">
+                            <!-- Horizontal lines -->
+                            <line x1="60" y1="50" x2="850" y2="50"/>
+                            <line x1="60" y1="100" x2="850" y2="100"/>
+                            <line x1="60" y1="150" x2="850" y2="150"/>
+                            <line x1="60" y1="200" x2="850" y2="200"/>
+                            <line x1="60" y1="250" x2="850" y2="250"/>
+                            <line x1="60" y1="300" x2="850" y2="300"/>
+                            <!-- Vertical lines -->
+                            <line x1="130" y1="50" x2="130" y2="300"/>
+                            <line x1="200" y1="50" x2="200" y2="300"/>
+                            <line x1="270" y1="50" x2="270" y2="300"/>
+                            <line x1="340" y1="50" x2="340" y2="300"/>
+                            <line x1="410" y1="50" x2="410" y2="300"/>
+                            <line x1="480" y1="50" x2="480" y2="300"/>
+                            <line x1="550" y1="50" x2="550" y2="300"/>
+                            <line x1="620" y1="50" x2="620" y2="300"/>
+                            <line x1="690" y1="50" x2="690" y2="300"/>
+                            <line x1="760" y1="50" x2="760" y2="300"/>
+                            <line x1="830" y1="50" x2="830" y2="300"/>
+                        </g>
+                        
+                        <!-- Y-axis labels -->
+                        <text x="45" y="55" class="text-xs fill-slate-600 font-medium">8M</text>
+                        <text x="45" y="105" class="text-xs fill-slate-600 font-medium">7M</text>
+                        <text x="45" y="155" class="text-xs fill-slate-600 font-medium">6M</text>
+                        <text x="45" y="205" class="text-xs fill-slate-600 font-medium">5M</text>
+                        <text x="45" y="255" class="text-xs fill-slate-600 font-medium">4M</text>
+                        <text x="45" y="305" class="text-xs fill-slate-600 font-medium">3M</text>
+                        
+                        <!-- Sales area fill -->
+                        <polygon fill="url(#salesGradientDetailed)" 
+                                 points="90,240 160,220 230,200 300,180 370,210 440,185 510,155 580,140 650,150 720,130 790,115 790,300 90,300"/>
+                        
+                        <!-- Sales trend line with enhanced styling -->
+                        <polyline fill="none" stroke="#137fec" stroke-width="4" filter="url(#shadow)"
+                                  points="90,240 160,220 230,200 300,180 370,210 440,185 510,155 580,140 650,150 720,130 790,115"/>
+                        
+                        <!-- Sales data points with values -->
+                        <g class="sales-points">
+                            <circle cx="90" cy="240" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="90" y="230" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.2M</text>
+                            
+                            <circle cx="160" cy="220" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="160" y="210" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.6M</text>
+                            
+                            <circle cx="230" cy="200" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="230" y="190" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.0M</text>
+                            
+                            <circle cx="300" cy="180" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="300" y="170" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.4M</text>
+                            
+                            <circle cx="370" cy="210" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="370" y="200" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.8M</text>
+                            
+                            <circle cx="440" cy="185" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="440" y="175" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.3M</text>
+                            
+                            <circle cx="510" cy="155" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="510" y="145" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.8M</text>
+                            
+                            <circle cx="580" cy="140" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="580" y="130" text-anchor="middle" class="text-xs fill-slate-700 font-medium">6.1M</text>
+                            
+                            <circle cx="650" cy="150" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="650" y="140" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.9M</text>
+                            
+                            <circle cx="720" cy="130" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="720" y="120" text-anchor="middle" class="text-xs fill-slate-700 font-medium">6.3M</text>
+                            
+                            <circle cx="790" cy="115" r="5" fill="#ffffff" stroke="#137fec" stroke-width="3" filter="url(#shadow)"/>
+                            <text x="790" y="105" text-anchor="middle" class="text-xs fill-slate-700 font-medium">6.7M</text>
+                        </g>
+                        
+                        <!-- X-axis labels -->
+                        <text x="90" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Jan</text>
+                        <text x="160" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Feb</text>
+                        <text x="230" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Mar</text>
+                        <text x="300" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Apr</text>
+                        <text x="370" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">May</text>
+                        <text x="440" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Jun</text>
+                        <text x="510" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Jul</text>
+                        <text x="580" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Aug</text>
+                        <text x="650" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Sep</text>
+                        <text x="720" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Oct</text>
+                        <text x="790" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Nov</text>
+                        
+                        <!-- Legend -->
+                        <g transform="translate(300, 360)">
+                            <line x1="0" y1="0" x2="20" y2="0" stroke="#137fec" stroke-width="3"/>
+                            <text x="25" y="5" class="text-sm fill-slate-700 font-medium">Sales Revenue</text>
+                            <text x="150" y="5" class="text-xs fill-green-600 font-bold">↗ +12.3% YoY</text>
+                        </g>
+                    </svg>
+                </div>
+                </div>
+                
+                <!-- Purchase Trends Tab Content -->
+                <div id="purchase-tab" class="tab-content">
+                <div class="chart-container" style="padding: 30px;">
+                    <svg viewBox="0 0 900 400" class="w-full" style="height: 300px;">
+                        <!-- Enhanced gradient definitions -->
+                        <defs>
+                            <linearGradient id="purchaseGradientDetailed" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#059669;stop-opacity:0.4" />
+                                <stop offset="100%" style="stop-color:#059669;stop-opacity:0.1" />
+                            </linearGradient>
+                            <filter id="shadowPurchase">
+                                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Background grid -->
+                        <g stroke="#e2e8f0" stroke-width="0.5" opacity="0.5">
+                            <!-- Horizontal lines -->
+                            <line x1="60" y1="50" x2="850" y2="50"/>
+                            <line x1="60" y1="100" x2="850" y2="100"/>
+                            <line x1="60" y1="150" x2="850" y2="150"/>
+                            <line x1="60" y1="200" x2="850" y2="200"/>
+                            <line x1="60" y1="250" x2="850" y2="250"/>
+                            <line x1="60" y1="300" x2="850" y2="300"/>
+                            <!-- Vertical lines -->
+                            <line x1="130" y1="50" x2="130" y2="300"/>
+                            <line x1="200" y1="50" x2="200" y2="300"/>
+                            <line x1="270" y1="50" x2="270" y2="300"/>
+                            <line x1="340" y1="50" x2="340" y2="300"/>
+                            <line x1="410" y1="50" x2="410" y2="300"/>
+                            <line x1="480" y1="50" x2="480" y2="300"/>
+                            <line x1="550" y1="50" x2="550" y2="300"/>
+                            <line x1="620" y1="50" x2="620" y2="300"/>
+                            <line x1="690" y1="50" x2="690" y2="300"/>
+                            <line x1="760" y1="50" x2="760" y2="300"/>
+                            <line x1="830" y1="50" x2="830" y2="300"/>
+                        </g>
+                        
+                        <!-- Y-axis labels -->
+                        <text x="45" y="55" class="text-xs fill-slate-600 font-medium">8M</text>
+                        <text x="45" y="105" class="text-xs fill-slate-600 font-medium">7M</text>
+                        <text x="45" y="155" class="text-xs fill-slate-600 font-medium">6M</text>
+                        <text x="45" y="205" class="text-xs fill-slate-600 font-medium">5M</text>
+                        <text x="45" y="255" class="text-xs fill-slate-600 font-medium">4M</text>
+                        <text x="45" y="305" class="text-xs fill-slate-600 font-medium">3M</text>
+                        
+                        <!-- Purchase area fill -->
+                        <polygon fill="url(#purchaseGradientDetailed)" 
+                                 points="90,260 160,245 230,235 300,220 370,240 440,225 510,210 580,195 650,205 720,185 790,175 790,300 90,300"/>
+                        
+                        <!-- Purchase trend line -->
+                        <polyline fill="none" stroke="#059669" stroke-width="4" filter="url(#shadowPurchase)"
+                                  points="90,260 160,245 230,235 300,220 370,240 440,225 510,210 580,195 650,205 720,185 790,175"/>
+                        
+                        <!-- Purchase data points with values -->
+                        <g class="purchase-points">
+                            <circle cx="90" cy="260" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="90" y="280" text-anchor="middle" class="text-xs fill-slate-700 font-medium">3.8M</text>
+                            
+                            <circle cx="160" cy="245" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="160" y="265" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.1M</text>
+                            
+                            <circle cx="230" cy="235" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="230" y="255" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.3M</text>
+                            
+                            <circle cx="300" cy="220" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="300" y="240" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.6M</text>
+                            
+                            <circle cx="370" cy="240" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="370" y="260" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.2M</text>
+                            
+                            <circle cx="440" cy="225" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="440" y="245" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.5M</text>
+                            
+                            <circle cx="510" cy="210" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="510" y="230" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.8M</text>
+                            
+                            <circle cx="580" cy="195" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="580" y="215" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.1M</text>
+                            
+                            <circle cx="650" cy="205" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="650" y="225" text-anchor="middle" class="text-xs fill-slate-700 font-medium">4.9M</text>
+                            
+                            <circle cx="720" cy="185" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="720" y="205" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.3M</text>
+                            
+                            <circle cx="790" cy="175" r="5" fill="#ffffff" stroke="#059669" stroke-width="3" filter="url(#shadowPurchase)"/>
+                            <text x="790" y="195" text-anchor="middle" class="text-xs fill-slate-700 font-medium">5.5M</text>
+                        </g>
+                        
+                        <!-- X-axis labels -->
+                        <text x="90" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Jan</text>
+                        <text x="160" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Feb</text>
+                        <text x="230" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Mar</text>
+                        <text x="300" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Apr</text>
+                        <text x="370" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">May</text>
+                        <text x="440" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Jun</text>
+                        <text x="510" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Jul</text>
+                        <text x="580" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Aug</text>
+                        <text x="650" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Sep</text>
+                        <text x="720" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Oct</text>
+                        <text x="790" y="330" text-anchor="middle" class="text-sm fill-slate-600 font-semibold">Nov</text>
+                        
+                        <!-- Legend -->
+                        <g transform="translate(290, 360)">
+                            <line x1="0" y1="0" x2="20" y2="0" stroke="#059669" stroke-width="3"/>
+                            <text x="25" y="5" class="text-sm fill-slate-700 font-medium">Purchase Costs</text>
+                            <text x="160" y="5" class="text-xs fill-green-600 font-bold">↗ +9.8% YoY</text>
+                        </g>
+                    </svg>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <div class="grid grid-cols-4 gap-6 mb-8">
+            <div class="finance-card text-center">
+                <div class="text-2xl font-bold text-green-600 mb-1">+12.3%</div>
+                <div class="text-sm text-slate-600">Revenue Growth</div>
+                <div class="text-xs text-slate-500 mt-1">YoY</div>
+            </div>
+            <div class="finance-card text-center">
+                <div class="text-2xl font-bold text-blue-600 mb-1">89.4%</div>
+                <div class="text-sm text-slate-600">Collection Rate</div>
+                <div class="text-xs text-slate-500 mt-1">This Month</div>
+            </div>
+            <div class="finance-card text-center">
+                <div class="text-2xl font-bold text-orange-600 mb-1">24 Days</div>
+                <div class="text-sm text-slate-600">Avg Collection</div>
+                <div class="text-xs text-slate-500 mt-1">Period</div>
+            </div>
+            <div class="finance-card text-center">
+                <div class="text-2xl font-bold text-purple-600 mb-1">AED 2.1M</div>
+                <div class="text-sm text-slate-600">Net Profit</div>
+                <div class="text-xs text-slate-500 mt-1">This Month</div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Finance Tables (Tabbed Interface) -->
+        <div class="tab-container">
+            <!-- Tab Headers -->
+            <div class="tab-header">
+                <div class="flex items-center gap-1">
+                    <button class="tab-button active" onclick="showTab('collections-this-week')">
+                        <span class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">payments</span>
+                            Collections This Week
+                        </span>
+                    </button>
+                    <button class="tab-button" onclick="showTab('collections-next-week')">
+                        <span class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">schedule</span>
+                            Collections Next Week
+                        </span>
+                    </button>
+                    <button class="tab-button" onclick="showTab('invoice-this-week')">
+                        <span class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">receipt</span>
+                            Invoice This Week
+                        </span>
+                    </button>
+                    <button class="tab-button" onclick="showTab('invoice-next-week')">
+                        <span class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">receipt_long</span>
+                            Invoice Next Week
+                        </span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="p-8">
+                
+                <!-- Collections – This Week -->
+                <div id="collections-this-week" class="tab-content active">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-semibold text-slate-900 mb-2">Collections – This Week</h2>
+                        <p class="text-sm text-slate-600">Track actual collections executed this week</p>
+                    </div>
+                    <div class="finance-table">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Amount Due (AED)</th>
+                                    <th>Amount Received (AED)</th>
+                                    <th>% Collected</th>
+                                    <th>Balance Remaining (AED)</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Emirates Properties</td>
+                                    <td>850,000</td>
+                                    <td>850,000</td>
+                                    <td>100%</td>
+                                    <td>0</td>
+                                    <td>Completed</td>
+                                </tr>
+                                <tr>
+                                    <td>Dubai Mall Expansion</td>
+                                    <td>1,200,000</td>
+                                    <td>960,000</td>
+                                    <td>80%</td>
+                                    <td>240,000</td>
+                                    <td>Partial payment</td>
+                                </tr>
+                                <tr>
+                                    <td>Luxury Towers Ltd</td>
+                                    <td>650,000</td>
+                                    <td>487,500</td>
+                                    <td>75%</td>
+                                    <td>162,500</td>
+                                    <td>Balance due Friday</td>
+                                </tr>
+                                <tr>
+                                    <td>Marina Residences</td>
+                                    <td>420,000</td>
+                                    <td>0</td>
+                                    <td>0%</td>
+                                    <td>420,000</td>
+                                    <td>Payment delayed</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td><strong>TOTAL</strong></td>
+                                    <td><strong>3,120,000</strong></td>
+                                    <td><strong>2,297,500</strong></td>
+                                    <td><strong>74%</strong></td>
+                                    <td><strong>822,500</strong></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Collections – Projected Next Week -->
+                <div id="collections-next-week" class="tab-content">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-semibold text-slate-900 mb-2">Collections – Projected Next Week</h2>
+                        <p class="text-sm text-slate-600">Short-term cash expectation (not forecast)</p>
+                    </div>
+                    <div class="finance-table">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Expected Amount (AED)</th>
+                                    <th>Probability / Confidence (%)</th>
+                                    <th>Expected Collection Date</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Marina Residences</td>
+                                    <td>420,000</td>
+                                    <td>85%</td>
+                                    <td>18/11/2025</td>
+                                    <td>Follow-up confirmed</td>
+                                </tr>
+                                <tr>
+                                    <td>Dubai Mall Expansion</td>
+                                    <td>240,000</td>
+                                    <td>95%</td>
+                                    <td>20/11/2025</td>
+                                    <td>Balance payment</td>
+                                </tr>
+                                <tr>
+                                    <td>Business Bay Tower</td>
+                                    <td>780,000</td>
+                                    <td>70%</td>
+                                    <td>22/11/2025</td>
+                                    <td>Milestone completion</td>
+                                </tr>
+                                <tr>
+                                    <td>JLT Office Complex</td>
+                                    <td>325,000</td>
+                                    <td>90%</td>
+                                    <td>19/11/2025</td>
+                                    <td>Scheduled payment</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td><strong>TOTAL EXPECTED</strong></td>
+                                    <td><strong>1,765,000</strong></td>
+                                    <td><strong>85%</strong></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Invoice – This Week -->
+                <div id="invoice-this-week" class="tab-content">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-semibold text-slate-900 mb-2">Invoice – This Week</h2>
+                        <p class="text-sm text-slate-600">Current-week invoicing activity</p>
+                    </div>
+                    <div class="finance-table">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Invoice Amount (AED)</th>
+                                    <th>Invoice Date</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" class="text-center text-slate-500 py-12">
+                                        <div class="flex flex-col items-center gap-3">
+                                            <span class="material-symbols-outlined text-3xl opacity-50">receipt</span>
+                                            <span>No invoices processed this week</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Invoice – Projected Next Week -->
+                <div id="invoice-next-week" class="tab-content">
+                    <div class="mb-6">
+                        <h2 class="text-xl font-semibold text-slate-900 mb-2">Invoice – Projected Next Week</h2>
+                        <p class="text-sm text-slate-600">Billing pipeline visibility</p>
+                    </div>
+                    <div class="finance-table">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Invoice Amount (AED)</th>
+                                    <th>Expected Invoice Date</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Atlantis Residences</td>
+                                    <td>280,000</td>
+                                    <td>18/11/2025</td>
+                                    <td>Draft</td>
+                                    <td>Phase 2 completion</td>
+                                </tr>
+                                <tr>
+                                    <td>Downtown Plaza</td>
+                                    <td>150,000</td>
+                                    <td>19/11/2025</td>
+                                    <td>Planned</td>
+                                    <td>Monthly progress</td>
+                                </tr>
+                                <tr>
+                                    <td>Vision 2030 Tower</td>
+                                    <td>120,000</td>
+                                    <td>21/11/2025</td>
+                                    <td>Planned</td>
+                                    <td>Variation order</td>
+                                </tr>
+                                <tr>
+                                    <td>Palm Gardens</td>
+                                    <td>100,000</td>
+                                    <td>22/11/2025</td>
+                                    <td>Draft</td>
+                                    <td>Final milestone</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td><strong>TOTAL PROJECTED</strong></td>
+                                    <td><strong>650,000</strong></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab button
+            event.target.closest('.tab-button').classList.add('active');
+        }
+        
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            const allButtons = document.querySelectorAll('.tab-button');
+            allButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            const selectedTab = document.getElementById(tabName + '-tab');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>

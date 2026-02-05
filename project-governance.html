@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Governance Control Sheet</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "brand-dark": "#1a2e3e",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .governance-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .governance-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #137fec, #3b82f6, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .governance-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .governance-section:hover::before {
+            opacity: 1;
+        }
+        .governance-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 14px;
+            background: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        .governance-input:focus {
+            outline: none;
+            border-color: #137fec;
+            box-shadow: 0 0 0 4px rgba(19, 127, 236, 0.1), 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            transform: scale(1.01);
+        }
+        .governance-link {
+            color: #137fec;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .governance-link:hover {
+            color: #0f67c4;
+            transform: translateX(2px);
+        }
+        .governance-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #137fec, #3b82f6);
+            transition: width 0.3s ease;
+        }
+        .governance-link:hover::after {
+            width: 100%;
+        }
+        .sentiment-selector {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 20px;
+            margin: 6px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.06);
+            position: relative;
+        }
+        .sentiment-selector:hover {
+            border-color: #137fec;
+            background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px 0 rgb(0 0 0 / 0.15);
+        }
+        .sentiment-selector.selected {
+            background: linear-gradient(145deg, #137fec, #0f67c4);
+            color: white;
+            border-color: #137fec;
+            box-shadow: 0 4px 15px 0 rgba(19, 127, 236, 0.4);
+        }
+        .sentiment-selector.selected::before {
+            content: '✓';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .thermometer {
+            height: 20px;
+            background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            min-width: 60px;
+            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+        }
+        .thermometer-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .thermometer-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .thermometer-red { 
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+        }
+        .thermometer-amber { 
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            box-shadow: 0 0 10px rgba(217, 119, 6, 0.3);
+        }
+        .thermometer-green { 
+            background: linear-gradient(135deg, #059669, #10b981);
+            box-shadow: 0 0 10px rgba(5, 150, 105, 0.3);
+        }
+        
+        /* Header enhancements */
+        header {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        /* Enhanced logo hover effect */
+        .logo-hover {
+            transition: all 0.3s ease;
+        }
+        .logo-hover:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 4px 8px rgba(19, 127, 236, 0.3));
+        }
+        
+        /* Progress bar enhancement */
+        .progress-bar {
+            background: linear-gradient(90deg, #137fec, #3b82f6);
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            animation: progressShine 3s infinite;
+        }
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Enhanced footer */
+        footer {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-top: 3px solid #e2e8f0;
+        }
+        
+        /* Card animation on load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .governance-section {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .governance-section:nth-child(2) { animation-delay: 0.1s; }
+        .governance-section:nth-child(3) { animation-delay: 0.2s; }
+        .governance-section:nth-child(4) { animation-delay: 0.3s; }
+        .governance-section:nth-child(5) { animation-delay: 0.4s; }
+        
+        /* Status badge styles */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-approved {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .status-pending {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
+        .status-critical {
+            background: linear-gradient(135deg, #fecaca, #fca5a5);
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        /* Subtle background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 2px 2px, rgba(19,127,236,0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
+    <!-- Header Row -->
+    <header class="sticky top-0 z-50 w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <a href="javascript:history.back()" class="logo-hover flex items-center cursor-pointer">
+                        <div class="relative h-10 w-10 flex items-center justify-center">
+                            <svg class="h-8 w-8 text-[#1a2e3e] dark:text-white" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 80 C 40 75, 60 60, 80 20 L 80 80 Z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col leading-none ml-1">
+                            <span class="text-sm font-bold tracking-tight text-[#1a2e3e] dark:text-white uppercase">Pinnacle</span>
+                            <span class="text-[10px] tracking-[0.2em] text-[#1a2e3e] dark:text-slate-400 uppercase">Interiors</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-xl font-semibold text-slate-900 dark:text-slate-100">Luxury Residential Tower - Level 45</div>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">PM:</span>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Sarah Williams</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">Start:</span>
+                    <span class="font-medium text-slate-700 dark:text-slate-200">15 Jan 2026</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">Handover:</span>
+                    <span class="font-medium text-slate-700 dark:text-slate-200">30 Jun 2026</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500 dark:text-slate-400">Data Date:</span>
+                    <span class="font-semibold text-primary">05 Feb 2026</span>
+                </div>
+                <a href="dashboard.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Dashboard
+                </a>
+                <a href="finance-overview.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Finance Overview
+                </a>
+                <a href="weekly-finance-review.html" class="px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-700 dark:text-slate-300 transition-colors">
+                    Weekly Review
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Three-Column Layout -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- Left Column - Operations & Delivery -->
+        <div class="w-1/3 p-6 border-r border-slate-200 dark:border-slate-800 overflow-auto custom-scrollbar">
+            
+            <!-- EHS Section -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-600">shield</span>
+                    EHS
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
+                        </div>
+                        <input type="text" class="governance-input" placeholder="Safety status update..." value="All safety protocols active and compliant">
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 70%;"></div>
+                        </div>
+                        <input type="text" class="governance-input" placeholder="Safety status update..." value="PPE training scheduled for new crew">
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
+                        </div>
+                        <input type="text" class="governance-input" placeholder="Safety status update..." value="Weekly safety meeting completed">
+                    </div>
+                </div>
+            </div>
+
+            <!-- PM Section -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-600">engineering</span>
+                    Project Management
+                </h3>
+                
+                <div class="mb-5">
+                    <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-3 text-xs uppercase tracking-wide">Works This Week</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="thermometer" style="width: 60px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 85%;"></div>
+                            </div>
+                            <input type="text" class="governance-input" placeholder="Work item..." value="Marble installation Level 42-44">
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="thermometer" style="width: 60px;">
+                                <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
+                            </div>
+                            <input type="text" class="governance-input" placeholder="Work item..." value="Electrical fit-out coordination">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h4 class="font-medium text-slate-700 dark:text-slate-300 mb-3 text-xs uppercase tracking-wide">Works Next Week</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="thermometer" style="width: 60px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 75%;"></div>
+                            </div>
+                            <input type="text" class="governance-input" placeholder="Planned work..." value="Lighting installation and testing">
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="thermometer" style="width: 60px;">
+                                <div class="thermometer-fill thermometer-red" style="width: 35%;"></div>
+                            </div>
+                            <input type="text" class="governance-input" placeholder="Planned work..." value="Final inspection preparation">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Items -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Shop Drawings Completion</span>
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 65%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Local Authority Status</span>
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Material Sample Boards Approval</span>
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Material Submission Approval</span>
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-red" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">LPO Status</span>
+                        <div class="thermometer" style="width: 80px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Column - Risks, Variations & Controls -->
+        <div class="w-1/3 p-6 border-r border-slate-200 dark:border-slate-800 overflow-auto custom-scrollbar">
+            
+            <!-- Critical Long Lead Items -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-600">schedule</span>
+                    Critical Long Lead Items
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">Italian Marble Slabs - Premium Grade</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 20 Feb 2026</div>
+                        </div>
+                        <div class="thermometer" style="width: 70px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 55%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">Custom Light Fixtures - Main Lobby</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 15 Mar 2026</div>
+                        </div>
+                        <div class="thermometer" style="width: 70px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">Elevator Control Systems</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">Required by: 01 Apr 2026</div>
+                        </div>
+                        <div class="thermometer" style="width: 70px;">
+                            <div class="thermometer-fill thermometer-red" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Critical LPOs -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-amber-600">receipt</span>
+                    Critical LPOs
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">LPO-2026-234</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 450,000 - Approved</div>
+                        </div>
+                        <div class="thermometer" style="width: 70px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">LPO-2026-187</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 230,000 - Pending</div>
+                        </div>
+                        <div class="thermometer" style="width: 70px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">LPO-2026-198</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 180,000 - Approved</div>
+                        </div>
+                        <div class="thermometer" style="width: 70px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risks / Mitigations -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-600">warning</span>
+                    Risks / Mitigations
+                </h3>
+                <div class="space-y-4">
+                    <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Marble delivery delay risk</div>
+                            <div class="thermometer" style="width: 60px;">
+                                <div class="thermometer-fill thermometer-amber" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400 mb-2">Mitigation: Alternative supplier sourced</div>
+                        <div class="text-sm">
+                            <span class="governance-link">Status: Open</span>
+                        </div>
+                    </div>
+                    <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Weather impact on schedule</div>
+                            <div class="thermometer" style="width: 60px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400 mb-2">Mitigation: Indoor work prioritized</div>
+                        <div class="text-sm">
+                            <span class="governance-link">Status: Closed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Escalation Items -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-600">priority_high</span>
+                    Escalation Items
+                </h3>
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="thermometer" style="width: 60px; margin-top: 8px;">
+                        <div class="thermometer-fill thermometer-red" style="width: 80%;"></div>
+                    </div>
+                    <textarea class="governance-input h-24" placeholder="PM-entered free text escalations...">Client approval delays affecting critical path - requires executive intervention to maintain handover date.</textarea>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Middle Column - Client & Change Management -->
+        <div class="w-1/3 p-6 border-r border-slate-200 dark:border-slate-800 overflow-auto custom-scrollbar">
+            
+            <!-- Client Concerns -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-amber-600">report_problem</span>
+                    Client Concerns
+                </h3>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">1. Marble finish quality concerns</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">2. Revised tile samples approval pending</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-red" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">3. MEP coordination with client systems</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Satisfaction -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-green-600">thumb_up</span>
+                    Client Satisfaction
+                </h3>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">1. Quality Rating</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">2. Schedule Rating</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">3. Communication Rating</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">4. Overall Satisfaction</span>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variation / Submission -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-600">change_circle</span>
+                    Variation / Submission
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">VO-2026-045</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 85,000 - Approved</div>
+                        </div>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="governance-link">VO-2026-046</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">AED 42,000 - Pending</div>
+                        </div>
+                        <div class="thermometer" style="width: 60px;">
+                            <div class="thermometer-fill thermometer-amber" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Control Register -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-600">fact_check</span>
+                    Change Control Register
+                </h3>
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Fully updated:</span>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="changeControl" value="yes" class="text-primary" checked>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">YES</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="changeControl" value="no" class="text-primary">
+                            <span class="text-sm text-slate-700 dark:text-slate-300">NO</span>
+                        </label>
+                    </div>
+                    <div class="thermometer" style="width: 70px;">
+                        <div class="thermometer-fill thermometer-green" style="width: 95%;"></div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="#" class="governance-link">Link to Change Control Register</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column - Finance & Payments -->
+        <div class="w-1/3 p-6 overflow-auto custom-scrollbar">
+            
+            <!-- Cash Flow Status -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-green-600">trending_up</span>
+                    Cash Flow Status
+                </h3>
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 h-6 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative">
+                        <div class="progress-bar h-6 rounded-full flex items-center justify-end pr-3 text-white text-sm font-semibold" style="width: 68%;">
+                            68% Received
+                        </div>
+                    </div>
+                    <div class="thermometer" style="width: 60px;">
+                        <div class="thermometer-fill thermometer-green" style="width: 68%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cashflow Outlook -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-600">bar_chart</span>
+                    Cashflow Outlook
+                </h3>
+                <div class="space-y-3">
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                        <svg viewBox="0 0 300 160" class="w-full h-32">
+                            <!-- Grid lines -->
+                            <defs>
+                                <pattern id="grid" width="50" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M 50 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+                                </pattern>
+                            </defs>
+                            <rect width="300" height="120" fill="url(#grid)" opacity="0.3"/>
+                            
+                            <!-- Bars -->
+                            <!-- JAN -->
+                            <rect x="25" y="80" width="30" height="30" fill="#cbd5e1" rx="2"/>
+                            <text x="40" y="125" text-anchor="middle" class="text-xs fill-slate-600 dark:fill-slate-400">JAN</text>
+                            
+                            <!-- FEB -->
+                            <rect x="70" y="60" width="30" height="50" fill="#cbd5e1" rx="2"/>
+                            <text x="85" y="125" text-anchor="middle" class="text-xs fill-slate-600 dark:fill-slate-400">FEB</text>
+                            
+                            <!-- MAR -->
+                            <rect x="115" y="70" width="30" height="40" fill="#cbd5e1" rx="2"/>
+                            <text x="130" y="125" text-anchor="middle" class="text-xs fill-slate-600 dark:fill-slate-400">MAR</text>
+                            
+                            <!-- APR -->
+                            <rect x="160" y="75" width="30" height="35" fill="#cbd5e1" rx="2"/>
+                            <text x="175" y="125" text-anchor="middle" class="text-xs fill-slate-600 dark:fill-slate-400">APR</text>
+                            
+                            <!-- MAY (highlighted) -->
+                            <rect x="205" y="20" width="30" height="90" fill="#137fec" rx="2"/>
+                            <text x="220" y="125" text-anchor="middle" class="text-xs fill-primary font-semibold">MAY</text>
+                            
+                            <!-- JUN -->
+                            <rect x="250" y="85" width="30" height="25" fill="#cbd5e1" rx="2"/>
+                            <text x="265" y="125" text-anchor="middle" class="text-xs fill-slate-600 dark:fill-slate-400">JUN</text>
+                        </svg>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-600 dark:text-slate-400">Peak Month:</span>
+                        <span class="font-semibold text-primary">May 2026</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-600 dark:text-slate-400">Expected Inflow:</span>
+                        <span class="font-bold text-slate-900 dark:text-slate-100">AED 1.2M</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Milestones -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-600">payments</span>
+                    Payment Milestones
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                        <div>
+                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Structural Completion</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">Due: 28 Feb 2026</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-right">
+                                <div class="font-bold text-slate-900 dark:text-slate-100">AED 580,000</div>
+                            </div>
+                            <div class="thermometer" style="width: 50px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                        <div>
+                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">MEP Rough-in</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">Due: 15 Mar 2026</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-right">
+                                <div class="font-bold text-slate-900 dark:text-slate-100">AED 420,000</div>
+                            </div>
+                            <div class="thermometer" style="width: 50px;">
+                                <div class="thermometer-fill thermometer-amber" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="font-medium text-sm text-slate-900 dark:text-slate-100">Final Handover</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">Due: 30 Jun 2026</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-right">
+                                <div class="font-bold text-slate-900 dark:text-slate-100">AED 280,000</div>
+                            </div>
+                            <div class="thermometer" style="width: 50px;">
+                                <div class="thermometer-fill thermometer-red" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- This Month's Payment Claim -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">payments</span>
+                    This Month's Payment Claim
+                </h3>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-slate-100">AED 485,000</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">Submitted: 01 Feb 2026</div>
+                        <div class="text-sm text-green-600 font-medium">Status: Approved</div>
+                    </div>
+                    <div class="thermometer" style="width: 80px;">
+                        <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finance Totals -->
+            <div class="governance-section">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-green-600">account_balance</span>
+                    Finance Summary
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-600 dark:text-slate-400">Total Contract Value</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 2,450,000</span>
+                            <div class="thermometer" style="width: 40px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-600 dark:text-slate-400">Total Invoiced to Date</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,890,000</span>
+                            <div class="thermometer" style="width: 40px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 77%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-600 dark:text-slate-400">Total Received to Date</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,666,200</span>
+                            <div class="thermometer" style="width: 40px;">
+                                <div class="thermometer-fill thermometer-amber" style="width: 68%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-600 dark:text-slate-400">Total Works Completed</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 dark:text-slate-100">AED 1,925,000</span>
+                            <div class="thermometer" style="width: 40px;">
+                                <div class="thermometer-fill thermometer-green" style="width: 79%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <a href="#" class="governance-link flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">schedule</span>
+                        Link to Timesheets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section - PM Weekly Review -->
+    <div class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-6">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                <span class="material-symbols-outlined text-slate-600">psychology</span>
+                PM Weekly Review
+            </h3>
+            <div class="flex items-center space-x-2">
+                <span class="text-sm text-slate-600 dark:text-slate-400 mr-4">Weekly Sentiment:</span>
+                <div class="sentiment-selector" onclick="selectSentiment(this, 'excellent')">
+                    <span class="material-symbols-outlined text-2xl text-green-600">mood</span>
+                    <div class="text-xs text-center font-medium">Excellent</div>
+                </div>
+                <div class="sentiment-selector" onclick="selectSentiment(this, 'satisfied')">
+                    <span class="material-symbols-outlined text-2xl text-blue-600">sentiment_satisfied</span>
+                    <div class="text-xs text-center font-medium">Satisfied</div>
+                </div>
+                <div class="sentiment-selector" onclick="selectSentiment(this, 'neutral')">
+                    <span class="material-symbols-outlined text-2xl text-slate-600">sentiment_neutral</span>
+                    <div class="text-xs text-center font-medium">Neutral</div>
+                </div>
+                <div class="sentiment-selector selected" onclick="selectSentiment(this, 'challenged')">
+                    <span class="material-symbols-outlined text-2xl text-amber-600">sentiment_dissatisfied</span>
+                    <div class="text-xs text-center font-medium">Challenged</div>
+                </div>
+                <div class="sentiment-selector" onclick="selectSentiment(this, 'critical')">
+                    <span class="material-symbols-outlined text-2xl text-red-600">sentiment_very_dissatisfied</span>
+                    <div class="text-xs text-center font-medium">Critical</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - Quick Access Links -->
+    <footer class="bg-slate-50 dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-8">
+        <div class="text-center mb-4">
+            <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-4">Quick Access to Project Folders</h3>
+        </div>
+        <div class="grid grid-cols-7 gap-4">
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-green-600">account_balance</span>
+                <span class="text-xs font-medium">Cashflow</span>
+            </a>
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-blue-600">receipt</span>
+                <span class="text-xs font-medium">BOQ</span>
+            </a>
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-purple-600">shopping_cart</span>
+                <span class="text-xs font-medium">Procurement</span>
+            </a>
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-orange-600">architecture</span>
+                <span class="text-xs font-medium">Drawings</span>
+            </a>
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-indigo-600">schedule</span>
+                <span class="text-xs font-medium">Schedule</span>
+            </a>
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-teal-600">description</span>
+                <span class="text-xs font-medium">Reports</span>
+            </a>
+            <a href="#" class="governance-link flex flex-col items-center gap-2 p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-xl text-red-600">gavel</span>
+                <span class="text-xs font-medium">Authorities</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function selectSentiment(element, sentiment) {
+            // Remove selected class from all sentiment selectors
+            document.querySelectorAll('.sentiment-selector').forEach(s => s.classList.remove('selected'));
+            // Add selected class to clicked element
+            element.classList.add('selected');
+            
+            // Store the selected sentiment
+            localStorage.setItem('weeklysentiment', sentiment);
+            console.log('PM Weekly Sentiment:', sentiment);
+        }
+
+        // Load saved sentiment on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedSentiment = localStorage.getItem('weeklysentiment');
+            if (savedSentiment) {
+                const sentimentElement = document.querySelector(`[onclick*="${savedSentiment}"]`);
+                if (sentimentElement) {
+                    document.querySelectorAll('.sentiment-selector').forEach(s => s.classList.remove('selected'));
+                    sentimentElement.classList.add('selected');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
