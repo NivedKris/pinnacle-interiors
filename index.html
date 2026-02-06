@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#149cb8",
-                        "background-light": "#f8fbfc",
-                        "background-dark": "#111e21",
-                        "charcoal": "#1a1a1a",
-                        "off-white": "#fcfcfc"
+                        "primary": "#1e3a8a",
+                        "navy-deep": "#1e3a8a",
+                        "slate-blue": "#334155",
+                        "accent-blue": "#64748b",
+                        "premium-blue": "#0f172a",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#020617",
+                        "off-white": "#fdfdfd"
                     },
                     fontFamily: {
                         "display": ["Manrope", "sans-serif"]
@@ -32,7 +33,7 @@
             },
         }
     </script>
-<style>
+<style type="text/tailwindcss">
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
@@ -40,13 +41,16 @@
             border-top: none;
             border-left: none;
             border-right: none;
-            border-bottom: 1px solid #d1d5db;
+            border-bottom: 1px solid #cbd5e1;
             background: transparent !important;
         }
         .underline-input:focus {
-            border-bottom: 2px solid #149cb8;
+            border-bottom: 2px solid #1e3a8a;
             outline: none;
             box-shadow: none;
+        }
+        .pinnacle-logo-svg {
+            fill: #1e3a8a;
         }
         
         /* Loading Overlay */
@@ -56,7 +60,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(26, 26, 26, 0.95);
+            background: rgba(30, 58, 138, 0.95);
             display: none;
             align-items: center;
             justify-content: center;
@@ -74,7 +78,7 @@
             width: 60px;
             height: 60px;
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #149cb8;
+            border-top-color: #1e3a8a;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
@@ -109,72 +113,72 @@
 </div>
 
 <div class="flex h-screen w-full">
-<!-- Left Column: Brand & Visuals (60%) -->
 <div class="hidden lg:flex lg:w-[60%] relative flex-col items-center justify-center p-12 overflow-hidden">
-<!-- Background Image with subtle warm tint -->
-<div class="absolute inset-0 bg-center bg-no-repeat bg-cover" data-alt="Minimalist luxury interior architectural space with clean lines" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBe0wCWp9CJEVQJ1mAVW9MSTWpt5ArLiFHu9HigRispYzzxSt8da3rnqZJBbhFzAsAytDIqXFbwmYSz30B7T6AUhAjSf2wFuNZWUTLApeWTdBFxSju3VuFkKM3RfwMY-SrLKHhv7vKJOB2DWC4la1Jorp6fXXeWr_ysJxRA9MLWPOsUoo56bRcUUIK6olcJivCpfh6MewbPi-xx-m2wmf2vZlirUD7ZmeZyqq41oTA899Y-9ZV4mIH-HBKdDQ3nXQjTMY6KLnDEKhk");'>
-<!-- Warm Tint Overlay -->
-<div class="absolute inset-0 bg-[#3a2a1a]/20 mix-blend-multiply"></div>
-<div class="absolute inset-0 bg-black/30"></div>
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnBARz6Cn0aXqqIJfTNNXCoNYf3GAc_hVpZZQzcYmStgbWHy0zkFv48R3kfs1iOIHjDYY4IW3pjhNV46LyngbNEqMpjF8bal-TWqEDcaaYe8GPKn5MlcKqL23wbUlWr4xoCapOls8LrRVwZCRZm1MAAq57-FlteFxmCHdOddUJ-MQyZcBykOVaKN2ePjYs-dZH4eB0fC7fe8pbCo3le4rIB1_68-WNZeiP8C0a_NLY0FNWrXSuYqn1fwOo4B_xvMg4pUVdHYu-t3c");'>
+<div class="absolute inset-0 bg-navy-deep/40 mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-slate-900/30"></div>
+<div class="absolute inset-0 bg-blue-900/20"></div>
 </div>
-<!-- Logo and Tagline -->
-<div class="relative z-10 flex flex-col items-center text-white">
-<h1 class="text-4xl font-extralight tracking-[0.4em] uppercase mb-4">Pinnacle Interiors</h1>
-<div class="w-24 h-[1px] bg-white/60 mb-6"></div>
-<p class="text-sm font-light tracking-[0.3em] uppercase opacity-90">Designing spaces with purpose</p>
+<div class="relative z-10 flex flex-col items-center text-white text-center">
+<h1 class="text-4xl font-extralight tracking-[0.5em] uppercase mb-4 text-white">Pinnacle Interiors</h1>
+<div class="w-24 h-[1px] bg-white/40 mb-6 mx-auto"></div>
+<p class="text-sm font-light tracking-[0.3em] uppercase opacity-90">Architectural Excellence</p>
 </div>
 </div>
-<!-- Right Column: Login Panel (40%) -->
-<div class="w-full lg:w-[40%] bg-off-white dark:bg-background-dark flex flex-col justify-between p-8 md:p-16 lg:p-20 shadow-2xl z-20">
-<!-- Mobile Logo (Visible only on small screens) -->
-<div class="lg:hidden flex flex-col items-center mb-12">
-<h1 class="text-[#0e191b] dark:text-white text-xl font-bold tracking-[0.1em] uppercase">Pinnacle</h1>
-<div class="w-8 h-[1px] bg-primary mt-1"></div>
-</div>
+<div class="w-full lg:w-[40%] bg-white dark:bg-background-dark flex flex-col justify-between p-8 md:p-16 lg:p-20 shadow-2xl z-20 overflow-y-auto">
 <div class="flex flex-col flex-grow justify-center max-w-md mx-auto w-full">
-<!-- Heading -->
-<div class="mb-10">
-<h2 class="text-[#0e191b] dark:text-white text-[32px] font-light leading-tight tracking-tight mb-2">Welcome back</h2>
-<p class="text-[#4e8b97] text-sm font-normal leading-normal tracking-wide">Please sign in to continue to your dashboard</p>
+<div class="mb-12 flex flex-col items-center">
+<div class="flex flex-col items-center text-navy-deep dark:text-blue-400">
+<svg class="w-24 h-24 mb-4 pinnacle-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<path d="M30 55 C 30 55, 60 50, 70 10 L 70 55 Z"></path>
+<text font-family="Manrope" font-size="14" font-weight="700" letter-spacing="0.1em" text-anchor="middle" x="50" y="72">PINNACLE</text>
+<text font-family="Manrope" font-size="9" font-weight="300" letter-spacing="0.4em" text-anchor="middle" x="50" y="84">INTERIORS</text>
+</svg>
 </div>
-<!-- Form -->
+</div>
+<div class="mb-10 text-center">
+<h2 class="text-navy-deep dark:text-white text-[32px] font-light leading-tight tracking-tight mb-2">Login to your space</h2>
+<p class="text-slate-500 text-sm font-normal leading-normal tracking-wide">Enter your credentials to access your interior dashboard</p>
+</div>
 <form class="flex flex-col gap-8" onsubmit="event.preventDefault(); showLoading();">
 <div class="flex flex-col">
-<label class="text-[#0e191b] dark:text-white text-xs font-semibold uppercase tracking-widest pb-1">Email</label>
-<input class="underline-input py-4 text-[#0e191b] dark:text-white text-base font-light placeholder:text-[#4e8b97]/50" placeholder="name@pinnacle.com" type="email"/>
+<label class="text-navy-deep dark:text-blue-300 text-[10px] font-bold uppercase tracking-[0.2em] pb-1">Email Address</label>
+<input class="underline-input py-4 text-navy-deep dark:text-white text-base font-light placeholder:text-slate-300" placeholder="executive@pinnacle.com" type="email"/>
 </div>
 <div class="flex flex-col relative">
-<label class="text-[#0e191b] dark:text-white text-xs font-semibold uppercase tracking-widest pb-1">Password</label>
-<input class="underline-input py-4 pr-10 text-[#0e191b] dark:text-white text-base font-light placeholder:text-[#4e8b97]/50" placeholder="••••••••" type="password"/>
-<button class="absolute right-0 bottom-4 text-[#4e8b97] hover:text-primary transition-colors" type="button">
+<label class="text-navy-deep dark:text-blue-300 text-[10px] font-bold uppercase tracking-[0.2em] pb-1">Password</label>
+<input class="underline-input py-4 pr-10 text-navy-deep dark:text-white text-base font-light placeholder:text-slate-300" placeholder="••••••••" type="password"/>
+<button class="absolute right-0 bottom-4 text-slate-400 hover:text-navy-deep transition-colors" type="button">
 <span class="material-symbols-outlined text-[20px]">visibility</span>
 </button>
 </div>
 <div class="flex items-center justify-between mt-2">
 <label class="flex items-center gap-2 cursor-pointer group">
-<input class="rounded border-gray-300 text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
-<span class="text-sm text-[#4e8b97] group-hover:text-primary transition-colors">Remember me</span>
+<input class="rounded border-slate-300 text-navy-deep focus:ring-navy-deep w-4 h-4" type="checkbox"/>
+<span class="text-sm text-slate-500 group-hover:text-navy-deep transition-colors">Remember device</span>
 </label>
-<a class="text-xs font-medium text-[#4e8b97] hover:text-primary tracking-wide uppercase transition-colors" href="#">Forgot password?</a>
+<a class="text-[11px] font-semibold text-navy-deep dark:text-blue-400 hover:opacity-70 tracking-wider uppercase transition-colors" href="#">Recovery options</a>
 </div>
-<button class="mt-4 bg-charcoal hover:bg-black text-white py-5 rounded-lg font-medium tracking-[0.1em] uppercase transition-all flex items-center justify-center gap-2" type="submit">
-                        Sign In
-                    </button>
+<button class="mt-4 bg-navy-deep hover:bg-blue-900 text-white py-5 rounded font-medium tracking-[0.2em] uppercase shadow-lg shadow-blue-900/20 transition-all flex items-center justify-center gap-2" type="submit">
+                    Sign In
+                </button>
 </form>
 </div>
-<!-- Footer -->
 <div class="pt-10 flex flex-col items-center">
-<div class="flex gap-4 mb-4">
-<a class="text-[#4e8b97] hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px]">public</span>
+<div class="flex gap-6 mb-5">
+<a class="text-slate-400 hover:text-navy-deep transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
 </a>
-<a class="text-[#4e8b97] hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined text-[18px]">mail</span>
+<a class="text-slate-400 hover:text-navy-deep transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+</a>
+<a class="text-slate-400 hover:text-navy-deep transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">mail</span>
 </a>
 </div>
-<p class="text-[#4e8b97] text-[10px] uppercase tracking-[0.2em] font-light text-center">
-                    © 2024 Pinnacle Interiors. All rights reserved.
-                </p>
+<p class="text-slate-400 text-[10px] uppercase tracking-[0.25em] font-light text-center">
+                © 2024 Pinnacle Interiors • Est. 1998
+            </p>
 </div>
 </div>
 </div>
